@@ -7,7 +7,9 @@ Per i mazzi, quelli di wxBriscola vanno benissimo.
 
 Ha due possibilità di inserimento degli input nella fase di gioco:
 *Da tastiera tramite i tasti 1,2 e 3 anche dal tastierino numerico
+
 *Visivo cliccando sulla carta
+
 
 E' presente  un giochino iniziale che consente di stabilire chi gioca per primo: il gioco della carta più alta, si pesca una carta dal mazzo e chi ha il valore più alto è il primo di mano.
 
@@ -16,12 +18,17 @@ Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manu
 
 # Set di mazzi arbitrario
 Sono necessari 4 semi, ognuno di 10 carte.
-Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 0 è 10 di bastoni, in sequenza)
-Coppe è rappresentato con le immagini jpeg coi numeri da 10 a 19
-Denari è rappresentato con le immagini jpeg da 20 a 29
-Spade è rappresentato con le immagini jpeg da 30 a 39
+*Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 0 è 10 di bastoni, in sequenza)
+
+*Coppe è rappresentato con le immagini jpeg coi numeri da 10 a 19
+
+*Denari è rappresentato con le immagini jpeg da 20 a 29
+
+*Spade è rappresentato con le immagini jpeg da 30 a 39
+
 Sono presenti, in oltre:
 *il retro di una singola carta che rappresenta le carte del computer di nome "retro carte pc.jpg"
+
 *il retro della carta del pc girata di 90 gradi chiamata "retro carte mazzo.jpg" che rappresenta il tallone
 
 Queste 42 immagini vanno posizionate in una sottocartella della cartella mazzi presente nella directory di lavoro.
@@ -30,19 +37,27 @@ Il programma vedrà la nuova cartella e la aggiungerà automaticamente al menù 
 # Webhook di IFTTT
 Dalla versione 0.2 è possibile interagire con IFTTT.
 In trigger sono 2:
+
 *quando si inizia una nuova partita
+
 *quando finisce la partita
 
 Se si inizia una nuova partita le opzioni leggibili da IFTTT sono:
+
 *il nome del giocatore
+
 *il nome della cpu
+
 *il mazzo usato per giocare
 
 il trigger da intercettare in IFTTT è JBriscola.start
 
 Se la partita è finita le opzioni leggibili da IFTTT sono:
+
 *il nome del giocatore
+
 *il nome della cpu
+
 *il punteggio finale della partita
 
 il trigger da intercettare in IFTTT è JBriscola.end
