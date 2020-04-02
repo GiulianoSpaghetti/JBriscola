@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -23,7 +24,7 @@ public class Carta {
 		img=null;
 	}
 	
-	public static void Inizializza(int n, CartaHelper h, String nomeMazzo) throws FileNotFoundException {
+	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b) throws FileNotFoundException {
 		carte=new Vector<Carta>();
 		if (carte.size()>0)
 			throw new IndexOutOfBoundsException("Chiamato carta::inizializza con carte.size()==" +carte.size());
@@ -34,7 +35,7 @@ public class Carta {
 		for (i=0; i<n; i++) {
 			carte.add(new Carta(i));
 		}
-		CaricaImmagini(nomeMazzo);
+		CaricaImmagini(nomeMazzo, b);
 	}
 	
 	public static void dealloca() {
@@ -44,7 +45,7 @@ public class Carta {
 	public static Carta GetCarta(int quale) { 
 		return carte.get(quale);
 	}
-	public static void CaricaImmagini(String mazzo) throws FileNotFoundException {
+	public static void CaricaImmagini(String mazzo, ResourceBundle b) throws FileNotFoundException {
 		path=System.getProperty("user.dir")+File.separator+"Mazzi"+File.separator;
 		nomeMazzo=mazzo;
 		String pathCompleta=path+mazzo+File.separator;
@@ -55,7 +56,7 @@ public class Carta {
 			s=pathCompleta+i+".jpg";
 			f=new File(s);
 			if (!f.exists()) {
-				throw new FileNotFoundException("Il file " + s + " non esiste.");
+				throw new FileNotFoundException(b.getString("theFile") + s + b.getString("doesntExists"));
 			}
 			try {
 				carte.get(i).SetImmagine(s);

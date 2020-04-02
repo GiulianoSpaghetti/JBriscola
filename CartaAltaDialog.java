@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,14 +34,18 @@ public class CartaAltaDialog extends JDialog {
 	private Carta carta, carta1;
 	private Random rand;
 	private JPanel p, p1;
-	public CartaAltaDialog(JFrame Parent, String nomeMazzo, Font f) {
-		super(Parent, "Gioco della CartaAlta", Dialog.ModalityType.DOCUMENT_MODAL);
+	private ResourceBundle bundle;
+	
+	public CartaAltaDialog(JFrame Parent, String nomeMazzo, Font f, ResourceBundle b) {
+		super(Parent, b.getString("mostValuableCardGame"), Dialog.ModalityType.DOCUMENT_MODAL);
+		bundle=b;
 		el=new ElaboratoreCarteBriscola(true);
 		try {
-			Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo);
+			Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), b.getString("Error"), JOptionPane.OK_OPTION);
+			System.exit(0);
 		}
 		mazzo=new Mazzo(el);
 		rand=new Random();
@@ -60,19 +65,19 @@ public class CartaAltaDialog extends JDialog {
 				// TODO Auto-generated method stub
 				OnOK();
 			}});
-		p.add(new JLabel("Il gioco della carta alta permette di stabilire chi gioca per primo."), c);
+		p.add(new JLabel(bundle.getString("mostValuableCardGameHead")), c);
 		c.gridy=1;
-		p.add(new JLabel("Scrivere un numero da 1 a 40 che identifica la carta del mazzo da scegliere."), c);
+		p.add(new JLabel(bundle.getString("mostValuableCardGameHeada")), c);
 		c.gridy=2;
-		p.add(new JLabel("Il computer ne sceglierà un'altra e chi avrà il valore maggiore comincerà."), c);
+		p.add(new JLabel(bundle.getString("mostValuableCardGameHeadb")), c);
 		c.gridwidth=1;
 		c.gridy=3;
-		p.add(new JLabel("Numero della carta da prendere: "), c);
+		p.add(new JLabel(bundle.getString("numberOfCardPrompt")), c);
 		c.gridx=1;
 		p.add(cartaUtente, c);
 		c.gridy=4;
 		c.gridx=0;
-		Ok=new JButton("Ok");
+		Ok=new JButton(bundle.getString("Ok"));
 		Ok.addActionListener(new ActionListener() {
 
 			@Override
@@ -82,7 +87,7 @@ public class CartaAltaDialog extends JDialog {
 			}});
 		p.add(Ok, c);
 		c.gridx=1;
-		Cancel=new JButton("Annulla");
+		Cancel=new JButton(bundle.getString("Cancel"));
 		Cancel.addActionListener(new ActionListener() {
 
 			@Override
@@ -92,9 +97,9 @@ public class CartaAltaDialog extends JDialog {
 			}});
 		p.add(Cancel, c);
 		getContentPane().add(p);
-		setSize(400,200);
-		pack();
+		setSize(600,200);
 		setVisible(true);
+		pack();
 	}
 	
 	private void OnOK() {
@@ -117,15 +122,15 @@ public class CartaAltaDialog extends JDialog {
 			c.anchor = GridBagConstraints.CENTER;
 			String s;
 			if (primaUtente)
-				s="Cominci prima tu";
+				s=bundle.getString("YouStart");
 			else
-				s="Comincia prima il pc";
+				s=bundle.getString("PcStarts");
 			p1.add(new JLabel (s), c);
 			c.gridwidth=1;
 			c.gridy=1;
-			p1.add(new JLabel ("Carta tua"), c);
+			p1.add(new JLabel (bundle.getString("YourCard")), c);
 			c.gridx=1;
-			p1.add(new JLabel("Carta del pc"), c);
+			p1.add(new JLabel(bundle.getString("PcCard")), c);
 			c.gridy=2;
 			c.gridx=0;
 			JLabel l=new JLabel(), l1=new JLabel();
@@ -138,7 +143,7 @@ public class CartaAltaDialog extends JDialog {
 			p1.add(l1, c);
 			c.gridy=3;
 			c.gridx=0;
-			JButton ok=new JButton("Ok");
+			JButton ok=new JButton(bundle.getString("Ok"));
 			ok.addActionListener(new ActionListener() {
 
 				@Override
@@ -150,14 +155,14 @@ public class CartaAltaDialog extends JDialog {
 				}});
 			p1.add(ok, c);
 			getContentPane().add(p1);
-			pack();
 			setVisible(true);
+			pack();
 			getRootPane().setDefaultButton(ok);
 			ok.requestFocus();
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Il valore inserito non è un numero intero.", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("notIntegerError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (IndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(this, "Il valore inserito non è valido.", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("valueError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

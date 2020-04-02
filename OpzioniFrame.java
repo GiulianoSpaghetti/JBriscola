@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,13 +27,17 @@ public class OpzioniFrame extends JDialog {
 	private JTextField nomeUtente;
 	private JTextField nomeCpu;
 	private JTextField secondi;
+	private JTextField IFTTTKey;
 	private JCheckBox punti, ordina, avvisa, cartaAlta, upgrades;
 	private JButton Ok, Cancel;
 	JBriscolaOpzioni opzioni;
+	ResourceBundle Bundle;
 	
-	public OpzioniFrame(JFrame parent, JBriscolaOpzioni o) {
-		super(parent, "Opzioni", Dialog.ModalityType.DOCUMENT_MODAL);
+	public OpzioniFrame(JFrame parent, JBriscolaOpzioni o, ResourceBundle b) {
+		super(parent, b.getString("Options"), Dialog.ModalityType.DOCUMENT_MODAL);
+		
 		opzioni=o;
+		Bundle=b;
 		JPanel p=new JPanel();
 		p.setLayout(new GridBagLayout());
 		c=new GridBagConstraints();
@@ -40,7 +45,7 @@ public class OpzioniFrame extends JDialog {
 		c.gridy = 0;
 		c.insets = new Insets(5, 0, 0, 10);
 		c.anchor = GridBagConstraints.LINE_END;
-		p.add(new JLabel("Nome Utente: "), c);
+		p.add(new JLabel(Bundle.getString("userName")), c);
 		c.gridx=1;
 		nomeUtente=new JTextField(20);
 		nomeUtente.addActionListener(new ActionListener() {
@@ -55,7 +60,7 @@ public class OpzioniFrame extends JDialog {
 		p.add(nomeUtente, c);
 		c.gridy=1;
 		c.gridx=0;
-		p.add(new JLabel("Nome CPU: "), c);
+		p.add(new JLabel(Bundle.getString("cpuName")), c);
 		nomeCpu=new JTextField(20);
 		nomeCpu.setText(opzioni.nomeCpu);
 		c.gridx=1;
@@ -70,7 +75,7 @@ public class OpzioniFrame extends JDialog {
 		p.add(nomeCpu, c);
 		c.gridy=2;
 		c.gridx=0;
-		p.add(new JLabel("Secondi in cui mostrare le giocate: "), c);
+		p.add(new JLabel(Bundle.getString("seconds")), c);
 		c.gridx=1;
 		secondi=new JTextField(20);
 		secondi.setText(""+opzioni.secondi);
@@ -83,31 +88,38 @@ public class OpzioniFrame extends JDialog {
 			}
 		});
 		p.add(secondi, c);
-		punti=new JCheckBox("La carta che designa la briscola può dar punti");
-		punti.setSelected(opzioni.punti);
 		c.gridy=3;
+		c.gridx=0;
+		p.add(new JLabel(Bundle.getString("iftttKey")), c);
+		c.gridx=1;
+		IFTTTKey=new JTextField(20);
+		IFTTTKey.setText(opzioni.IFTTTKey);
+		p.add(IFTTTKey, c);
+		punti=new JCheckBox(Bundle.getString("trumpCardSeed"));
+		punti.setSelected(opzioni.punti);
+		c.gridy=4;
 		c.gridx=0;
 		c.gridwidth=2;
 		c.fill=GridBagConstraints.HORIZONTAL;
 		p.add(punti, c);
-		ordina=new JCheckBox("Ordina le carte che mi capitano");
+		ordina=new JCheckBox(Bundle.getString("orderCards"));
 		ordina.setSelected(opzioni.ordina);
-		c.gridy=4;
-		p.add(ordina, c);
-		avvisa=new JCheckBox("Avvisa quando il tallone finisce");
-		avvisa.setSelected(opzioni.avvisa);
 		c.gridy=5;
-		p.add(avvisa, c);
-		cartaAlta=new JCheckBox("Fai il gioco della carta più alta all'avvio");
-		cartaAlta.setSelected(opzioni.cartaAlta);
+		p.add(ordina, c);
+		avvisa=new JCheckBox(Bundle.getString("deckAlert"));
+		avvisa.setSelected(opzioni.avvisa);
 		c.gridy=6;
-		p.add(cartaAlta, c);
-		upgrades=new JCheckBox("Notifica nuove versioni all'avvio");
-		upgrades.setSelected(opzioni.upgrades);
-		upgrades.setEnabled(false);
+		p.add(avvisa, c);
+		cartaAlta=new JCheckBox(Bundle.getString("makeMostValuableCardGame"));
+		cartaAlta.setSelected(opzioni.cartaAlta);
 		c.gridy=7;
+		p.add(cartaAlta, c);
+		upgrades=new JCheckBox(Bundle.getString("checkNewVersions"));
+		upgrades.setSelected(opzioni.upgrades);
+		c.gridy=8;
+		c.gridx=0;
 		p.add(upgrades, c);
-		Ok=new JButton("Ok");
+		Ok=new JButton(Bundle.getString("Ok"));
 		Ok.addActionListener(new ActionListener() {
 
 			@Override
@@ -116,10 +128,10 @@ public class OpzioniFrame extends JDialog {
 				OnOK();
 			}
 		});
-		c.gridy=8;
+		c.gridy=9;
 		c.gridwidth=1;
 		p.add(Ok, c);
-		Cancel=new JButton("Anulla");
+		Cancel=new JButton(Bundle.getString("Cancel"));
 		c.gridx=1;
 		Cancel.addActionListener(new ActionListener() {
 
@@ -130,10 +142,8 @@ public class OpzioniFrame extends JDialog {
 			}});
 		p.add(Cancel, c);
 		getContentPane().add(p);
-		setTitle("Opzioni");
 		setLocationRelativeTo(null);  
-		setSize(300,300);
-		pack();
+		setSize(650,350);
 	}
 	
 	public JBriscolaOpzioni getOpzioni() {
@@ -149,11 +159,12 @@ public class OpzioniFrame extends JDialog {
 		opzioni.avvisa=avvisa.isSelected();
 		opzioni.cartaAlta=cartaAlta.isSelected();
 		opzioni.upgrades=upgrades.isSelected();
+		opzioni.IFTTTKey=IFTTTKey.getText();
 		try {
 			opzioni.secondi=Integer.parseInt(secondi.getText());
 			setVisible(false);
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, "Il numero di secondi non è intero.", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getString("integerError"), Bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

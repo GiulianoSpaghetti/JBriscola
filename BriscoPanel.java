@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -26,8 +27,14 @@ public class BriscoPanel extends JPanel {
 	private Mazzo mazzo;
 	private	Point p1, p2;
 	private ElaboratoreCarteBriscola helper;
-	private int spaziatura;
-	public BriscoPanel(Giocatore u, Giocatore c, Mazzo m, ElaboratoreCarteBriscola b, boolean primaUtente, Font font) throws FileNotFoundException, IOException {
+	private int spaziatura, spaziaturay;
+	ResourceBundle Bundle;
+	public BriscoPanel(Giocatore u, Giocatore c, Mazzo m, ElaboratoreCarteBriscola b, boolean primaUtente, Font font, ResourceBundle bundle) throws FileNotFoundException, IOException {
+		if (System.getProperty("os.name").contains("Windows"))
+			spaziaturay=60;
+		else
+			spaziaturay=100;
+		Bundle=bundle;
 		Utente=u;
 		Computer=c;
 		f=font;
@@ -60,17 +67,13 @@ public class BriscoPanel extends JPanel {
 		String s=Carta.GetPathCarte()+"retro carte mazzo.jpg";
 		File f=new File(s);
 		if (!f.exists())
-			throw new FileNotFoundException("Il file "+s+" non esiste.");
+			throw new FileNotFoundException(Bundle.getString("theFile")+s+Bundle.getString("doesntExists"));
 		else
 			img=ImageIO.read(f);
 	}
 	
-	public Point GetDimensioni() {
-		return p2;
-	}
-	
 	public int controllaCoordinate(int x, int y) {
-		int starty=20+fm.getHeight(), stopy=starty+img.getWidth(), temp;
+		int starty=spaziaturay+fm.getHeight(), stopy=starty+img.getWidth(), temp;
 		if (starty<=y && y<=stopy) {
 			temp=img.getHeight()+spaziatura;
 			temp=x/temp;
@@ -85,22 +88,30 @@ public class BriscoPanel extends JPanel {
 		repaint();
 	}
 	
+	public  Point getDimensioni() {
+		Point p=Computer.Paint(this, null, fm, spaziatura);
+	    String stringaCarte=Bundle.getString("inDeckRemains")+mazzo.GetNumeroCarteStr()+Bundle.getString("cards");
+	    p.x=p.x+fm.stringWidth(stringaCarte)+10+img.getWidth();
+	    return p;
+	}
+	
 	public void paintComponent(Graphics gr) {
 		if (fm==null)
 			fm=gr.getFontMetrics();
 		Graphics2D g = (Graphics2D)gr;
 		g.setFont(f);
 	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-	    
+	    String stringaCarte=Bundle.getString("inDeckRemains")+mazzo.GetNumeroCarteStr()+Bundle.getString("cards");
 		p1=Utente.Paint(this, g, fm, spaziatura);
 		p2=Computer.Paint(this, g, fm, spaziatura);
-		g.drawString("Punti di "+Utente.GetNome()+": "+Utente.GetPunteggioStr(), p1.x, p1.y);
+		p2.x = p1.x + fm.stringWidth(stringaCarte)+10;
+		g.drawString(Bundle.getString("pointsOf")+Utente.GetNome()+": "+Utente.GetPunteggioStr(), p1.x, p1.y);
 		p1.y=p1.y+fm.getHeight()+spaziatura;
-		g.drawString("Punti di "+Computer.GetNome()+": "+Computer.GetPunteggioStr(), p1.x, p1.y);
+		g.drawString(Bundle.getString("pointsOf")+Computer.GetNome()+": "+Computer.GetPunteggioStr(), p1.x, p1.y);
 		p1.y=p1.y+fm.getHeight()+spaziatura;
-		g.drawString("Nel mazzo rimangono "+mazzo.GetNumeroCarteStr()+" carte.", p1.x, p1.y);
+		g.drawString(stringaCarte, p1.x, p1.y);
 		p1.y=p1.y+fm.getHeight()+spaziatura;
-		g.drawString("Il seme di Briscola è: "+Carta.GetSemeStr(helper.GetCartaBriscola()), p1.x, p1.y);
+		g.drawString(Bundle.getString("trumpSuit")+Bundle.getString(Carta.GetSemeStr(helper.GetCartaBriscola())), p1.x, p1.y);
 		if (mazzo.GetNumeroCarte()>0) {
 			p1.x=p1.x+spaziatura*3;
 			p1.y=p1.y+fm.getHeight()+spaziatura;

@@ -2,16 +2,41 @@ package org.numerone.altervista.jbriscola;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 
 public class JBriscolaOpzioni {
 
 	String nomeUtente, nomeCpu, mazzo;
-	int secondi;
+	int secondi, locale;
 	boolean punti, ordina, avvisa, cartaAlta, upgrades;
 	Color coloreSfondo, coloreTesto;
 	Font font;
+	String IFTTTKey;
+	Point dimensioni;
+	
+	public Point getDimensioni() {
+		return dimensioni;
+	}
+	
+	public void setDimensioni(Point p) {
+		dimensioni=p;
+	}
+	
+	public int getLocale() {
+		return locale;
+	}
+	
+	public void setLocale(int loc) {
+		locale=loc;
+	}
+	public String getIFTTTKey() {
+		return IFTTTKey;
+	}
 
-
+	public void setIFTTTKey(String key) {
+		this.IFTTTKey=key;
+	}
+	
 	public Font getFont() {
 		return font;
 	}

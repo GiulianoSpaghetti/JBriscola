@@ -14,7 +14,7 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 		// TODO Auto-generated method stub
 		if (v.size()==0)
 			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, int) con v.size==0");
-		if (i>v.size() || i<0)
+		if (i>=v.size() || i<0)
 			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, int) con i="+i);
 		/*Scanner in=new Scanner(System.in);
 		do {
@@ -32,7 +32,7 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 		// TODO Auto-generated method stub
 		if (v.size()==0)
 			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, Carta, int) con v.size==0");
-		if (i>v.size() || i<0)
+		if (i>=v.size() || i<0)
 			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, Carta, int) con i="+i);
 	/*	Scanner in=new Scanner(System.in);
 		do {
@@ -62,11 +62,12 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 		punto.y=fm.getHeight()+spaziatura;
 		g.drawString(nome, 0, 20);
 		int i;
-		for (i=0; i<mano.size(); i++) {
-			if (i!=iCartaGiocata)
-				g.drawImage(mano.get(i).GetImmagine(), punto.x ,punto.y, p);
-			else
-				g.drawImage(mano.get(iCartaGiocata).GetImmagine(), Carta.GetLarghezzaImmagine()/2 ,fm.getHeight()+spaziatura*2+Carta.GetAltezzaImmagine(), p);
+		for (i=0; i<3; i++) {
+			if (i<mano.size())
+				if (i!=iCartaGiocata)
+					g.drawImage(mano.get(i).GetImmagine(), punto.x ,punto.y, p);
+				else
+					g.drawImage(mano.get(iCartaGiocata).GetImmagine(), Carta.GetLarghezzaImmagine()/2 ,fm.getHeight()+spaziatura*2+Carta.GetAltezzaImmagine(), p);
 			punto.x=punto.x+Carta.GetLarghezzaImmagine()+spaziatura;
 		}
 		return punto;

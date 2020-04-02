@@ -1,14 +1,18 @@
 package org.numerone.altervista.jbriscola;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,9 +20,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -36,24 +48,25 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3149121715539056995L;
-	private String version="0.1", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String version="0.2", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
 	private Carta c, c1;
 	private GiocatoreHelperCpu motoreCpu=null;
 	private JMenuBar menu;
-	private JMenu fileMenu, infoMenu, colorMenu;
-	private JMenuItem esci, nuovaPartita, opzioni, about, coloreSfondo, coloreTesto, font;
+	private JMenu fileMenu, infoMenu, colorMenu, languageMenu;
+	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font, en, es, it;
 	private boolean primaUtente;
 	private JBriscolaOpzioni dataOpzioni;
 	private static Gson gson = new Gson();
 	private static String path="JBriscola"+File.separator+"jbriscola.json";
-
+	private ResourceBundle bundle;  
+	
 	ElaboratoreCarteBriscola e;
 	CartaHelperBriscola br;
 	Timer t;
-	public BriscoFrame() throws FileNotFoundException, IOException {
+	public BriscoFrame(ResourceBundle Bundle) throws FileNotFoundException, IOException {
 		super("JBriscola");
 		int i;
 		if (System.getProperty("os.name").contains("Windows"))
@@ -76,17 +89,20 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setColoreSfondo(Color.GREEN);
 			dataOpzioni.setColoreTesto(Color.BLACK);
 			dataOpzioni.setFont(new Font("Serif", Font.PLAIN, 20));
+			dataOpzioni.setLocale(2);
+			dataOpzioni.setDimensioni(new Point(550,5200));
 			salvaStato(gson.toJson(dataOpzioni));
 		}
+		bundle=ResourceBundle.getBundle("JBriscolaMessages", LoadLocale(dataOpzioni.locale));
 		if (dataOpzioni.cartaAlta) {
-			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null);
+			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null, bundle);
 			primaUtente=cartaAlta.giocaPrimaUtente();
 			cartaAlta.dispose();
 		}
 		setBackground(dataOpzioni.coloreSfondo);
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
-		Carta.Inizializza(40, br, dataOpzioni.getMazzo());
+		Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
 		motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 		mazzo=new Mazzo(e);
 		utente=new Giocatore(new GiocatoreHelperUtente(), dataOpzioni.nomeUtente, dataOpzioni.ordina, 3);
@@ -98,7 +114,7 @@ public class BriscoFrame extends JFrame {
 			secondo.AddCarta(mazzo);
 		}
 		t=new Timer();
-		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, dataOpzioni.font);
+		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, dataOpzioni.font, bundle);
 		p.setForeground(dataOpzioni.coloreTesto);
 		getContentPane().add(p);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -171,8 +187,8 @@ public class BriscoFrame extends JFrame {
 			}
 		});
 		menu=new JMenuBar();
-		fileMenu=new JMenu("File");
-		nuovaPartita=new JMenuItem("Nuova Partita");
+		fileMenu=new JMenu(bundle.getString("File"));
+		nuovaPartita=new JMenuItem(bundle.getString("NewGame"));
 		nuovaPartita.addActionListener(new ActionListener() {
 
 			@Override
@@ -187,7 +203,7 @@ public class BriscoFrame extends JFrame {
 			}});
 		fileMenu.add(nuovaPartita);
 		
-		font=new JMenuItem("Font");
+		font=new JMenuItem(bundle.getString("Font"));
 		font.addActionListener(new ActionListener() {
 
 			@Override
@@ -196,7 +212,7 @@ public class BriscoFrame extends JFrame {
 				OnSelezionaFont();
 			}});
 		fileMenu.add(font);
-		opzioni=new JMenuItem("Opzioni");
+		opzioni=new JMenuItem(bundle.getString("Options"));
 		opzioni.addActionListener(new ActionListener() {
 
 			@Override
@@ -205,7 +221,7 @@ public class BriscoFrame extends JFrame {
 				OnOpzioni();
 			}});
 		fileMenu.add(opzioni);
-		esci=new JMenuItem("Esci");
+		esci=new JMenuItem(bundle.getString("Exit"));
 		esci.addActionListener(new ActionListener() {
 
 			@Override
@@ -213,17 +229,27 @@ public class BriscoFrame extends JFrame {
 				System.exit(0);
 			}});
 		fileMenu.add(esci);
-		infoMenu=new JMenu("?");
-		about=new JMenuItem("Informazioni");
+		infoMenu=new JMenu(bundle.getString("?"));
+		about=new JMenuItem(bundle.getString("About"));
 		about.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				OnAbout();
 			}});
+		aggiornamenti=new JMenuItem(bundle.getString("CheckUpdates"));
+		aggiornamenti.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				OnAggiornamenti(true);
+				
+			}});
 		infoMenu.add(about);
-		colorMenu=new JMenu("Colori");
-		coloreTesto=new JMenuItem("Colore testo");
+		infoMenu.add(aggiornamenti);
+		colorMenu=new JMenu(bundle.getString("Colors"));
+		coloreTesto=new JMenuItem(bundle.getString("TextColor"));
 		coloreTesto.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) 
 			    { 
@@ -231,7 +257,7 @@ public class BriscoFrame extends JFrame {
 			    } 
 		});
 		colorMenu.add(coloreTesto);
-		coloreSfondo=new JMenuItem("Colore sfondo");
+		coloreSfondo=new JMenuItem(bundle.getString("BackgroundColor"));
 		coloreSfondo.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) 
 			    { 
@@ -239,19 +265,58 @@ public class BriscoFrame extends JFrame {
 			    } 
 		});
 		colorMenu.add(coloreSfondo);
+		en=new JMenuItem(bundle.getString("en"));
+		en.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SetLocale(1);
+			}});
+		es=new JMenuItem(bundle.getString("es"));
+		es.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SetLocale(2);
+			}});
+		it=new JMenuItem(bundle.getString("it"));
+		it.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SetLocale(3);
+			}});
+		languageMenu=new JMenu(bundle.getString("Translations"));
+		languageMenu.add(en);
+		languageMenu.add(es);
+		languageMenu.add(it);
 		menu.add(fileMenu);
 		menu.add(colorMenu);
 		menu.add(GetMenuMazzi());
+		menu.add(languageMenu);
 		menu.add(infoMenu);
 		setJMenuBar(menu);
-		setSize(550,520);
+		setSize(dataOpzioni.dimensioni.x, dataOpzioni.dimensioni.y);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		if (dataOpzioni.upgrades)
+			OnAggiornamenti(false);
+		Thread t=new Thread( new Runnable() { 
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				IFTTTConnect("JBriscola.start", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, dataOpzioni.mazzo);
+
+			}});
+		t.start();
 	}
 	
 	private void OnNuovaPartita(boolean avvisa, boolean inizializza) throws FileNotFoundException, IOException {
 		int punteggioUtente, punteggioCpu, i;
-		if (avvisa && JOptionPane.showConfirmDialog(null, "La partita correntemente in corso verrï¿½ interrota. Continuare?", "Richiesta Conferma", JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) {
+		if (avvisa && JOptionPane.showConfirmDialog(null, bundle.getString("newGameMessage"), bundle.getString("confirmDialog"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) {
 			;	
 		} else {
 			if (inizializza) {
@@ -265,7 +330,7 @@ public class BriscoFrame extends JFrame {
 			e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 			mazzo=new Mazzo(e);
 			br=new CartaHelperBriscola(e);
-			Carta.Inizializza(40, br, dataOpzioni.getMazzo());
+			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
 			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 			utente=new Giocatore(new GiocatoreHelperUtente(), dataOpzioni.nomeUtente, dataOpzioni.ordina, 3);
 			cpu=new Giocatore(motoreCpu, dataOpzioni.nomeCpu, true, 3);
@@ -289,8 +354,76 @@ public class BriscoFrame extends JFrame {
 				secondo=utente;
 				primo.Gioca(0);
 			}
+			Thread t=new Thread( new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					IFTTTConnect("JBriscola.start", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, dataOpzioni.mazzo);
+				}});
+			t.start();
 			repaint();
 		}
+	}
+
+	private void IFTTTConnect(String trigger, String chiave, String value1, String value2, String value3) {
+		if (!dataOpzioni.IFTTTKey.isEmpty()) {
+			try {
+				HttpsURLConnection connection;
+				value1 = URLEncoder.encode(value1, StandardCharsets.UTF_8.name());
+				value2 = URLEncoder.encode(value2, StandardCharsets.UTF_8.name());
+				value3 = URLEncoder.encode(value3, StandardCharsets.UTF_8.name());
+				String urlParameters  = String.format("value1=%s&value2=%s&value3=%s", value1, value2, value3);
+				byte[] postData       = urlParameters.getBytes(StandardCharsets.UTF_8);
+				URL url=new URL(String.format("https://maker.ifttt.com/trigger/%s/with/key/%s",trigger, chiave));
+				connection=(HttpsURLConnection) url.openConnection();
+				connection.setRequestMethod("POST");
+				connection.setDoOutput(true);
+				connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+				connection.setRequestProperty("charset", "utf-8");
+				connection.setRequestProperty("Content-Length", Integer.toString(postData.length));
+				connection.setUseCaches(false);
+				DataOutputStream stream = new DataOutputStream(connection.getOutputStream());
+				stream.write( postData );
+				connection.disconnect();
+				if (connection.getResponseCode()!=200)
+					JOptionPane.showMessageDialog(this, bundle.getString("ifttError"), bundle.getString("Error"), JOptionPane.OK_OPTION );
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), bundle.getString("Error"), JOptionPane.OK_OPTION);
+			}
+		}
+
+	}
+	
+	private void OnAggiornamenti(boolean avvisa) {
+		try {
+			HttpsURLConnection connection;
+			URL url=new URL("https://raw.githubusercontent.com/numerunix/JBriscola/master/version.info");
+			connection=(HttpsURLConnection) url.openConnection();
+ 			connection.setUseCaches(false);
+         	BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+ 			String input;
+			input = br.readLine();
+			float attuale=Float.parseFloat(version);
+			float nuova=Float.parseFloat(input);
+			if (attuale<nuova) {
+				if (JOptionPane.showConfirmDialog(this, String.format(bundle.getString("newVersionMessage"), version, input), bundle.getString("newVersionTitle"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
+					if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+					    Desktop.getDesktop().browse(new URI("https://github.com/numerunix/JBriscola/releases"));
+					}
+				}
+			} else {
+				if (avvisa)
+					JOptionPane.showMessageDialog(this, bundle.getString("latestVersionMessage"), bundle.getString("latestVersionTitle"), JOptionPane.OK_OPTION);
+			}
+			br.close();
+			if (connection.getResponseCode()!=200)
+				JOptionPane.showMessageDialog(this, bundle.getString("httpError"), bundle.getString("Error"), JOptionPane.OK_OPTION );
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), bundle.getString("Error"), JOptionPane.OK_OPTION);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	private void OnTimer() {
@@ -306,17 +439,31 @@ public class BriscoFrame extends JFrame {
 			scarto=utente.GetPunteggio()-cpu.GetPunteggio();
 			String s;
 			if (scarto==0)
-				s="La partita ï¿½ patta.";
+				s=bundle.getString("draw");
 			else {
 				if (scarto>0)
-					s="Hai vinto per ";
+					s=bundle.getString("wonMessage");
 				else
-					s="Hai perso per ";
+					s=bundle.getString("looseMessage");
 				scarto=Math.abs(scarto);
-				s=s+scarto + " punti.";
-				
-				JOptionPane.showMessageDialog(this, s, "Partita Finita", JOptionPane.INFORMATION_MESSAGE);
-				System.exit(0);
+				s=s+scarto + bundle.getString("points");
+				Thread t=new Thread( new Runnable() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						IFTTTConnect("JBriscola.end", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, utente.GetPunteggioStr()+bundle.getString("at")+cpu.GetPunteggioStr());
+					}});
+				t.start();				
+				if (JOptionPane.showConfirmDialog(this, s+bundle.getString("doYouWishToContinue"), bundle.getString("GameOver"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION)
+					System.exit(0);
+				else
+					try {
+						OnNuovaPartita(false, true);
+						return;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
     	}
 		if (primo==cpu)
@@ -353,7 +500,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnOpzioni() {
-		OpzioniFrame f=new OpzioniFrame(this, dataOpzioni);
+		OpzioniFrame f=new OpzioniFrame(this, dataOpzioni, bundle);
 		f.setVisible(true);
 		dataOpzioni=f.getOpzioni();
 		utente.setNome(dataOpzioni.nomeUtente);
@@ -398,11 +545,11 @@ public class BriscoFrame extends JFrame {
 	}
 
 	private JMenu GetMenuMazzi() throws FileNotFoundException {
-		JMenu m=new JMenu("Mazzi");
+		JMenu m=new JMenu(bundle.getString("Decks"));
 		JMenuItem i=null;
 		File f=new File(Carta.GetPathMazzi());
 		if (!f.exists())
-			throw new FileNotFoundException("La path "+ Carta.GetPathMazzi()+" non esiste.");
+			throw new FileNotFoundException(bundle.getString("Path")+ Carta.GetPathMazzi()+bundle.getString("doesntExists"));
 		File[] dirs=f.listFiles();
 		for (File file: dirs) {
 			if (file.isDirectory()) {
@@ -414,23 +561,25 @@ public class BriscoFrame extends JFrame {
 						// TODO Auto-generated method stub
 						String mazzo=Carta.GetNomeMazzo();
 						try {
-							Carta.CaricaImmagini(file.getName());
+							Carta.CaricaImmagini(file.getName(), bundle);
 							motoreCpu.CaricaImmagine();
 							p.CaricaImmagine();
 							repaint();
+							dataOpzioni.dimensioni=p.getDimensioni();
+							setSize(dataOpzioni.dimensioni.x, dataOpzioni.dimensioni.y);
 							dataOpzioni.setMazzo(file.getName());
 							salvaStato(gson.toJson(dataOpzioni));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, e.getMessage()+"\n Il programma proverà a ricaricare il mazzo precedente.", "Errore", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							try {
-								Carta.CaricaImmagini(mazzo);
+								Carta.CaricaImmagini(mazzo, bundle);
 								motoreCpu.CaricaImmagine();
 								p.CaricaImmagine();
 								repaint();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
-								JOptionPane.showMessageDialog(null, "Non è stato possibile caricare il mazzo precedente: uscire dal programma significa non poterlo avviare più. Caricare un mazzo completo prima di uscire", "Errore", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}});
@@ -441,12 +590,12 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnAbout() {
-		JBriscolaAbout b=new JBriscolaAbout(this);
+		JBriscolaAbout b=new JBriscolaAbout(this, version, bundle);
 		b.dispose();
 	}
 	
 	private void OnColoreSfondo() {
-        dataOpzioni.coloreSfondo = JColorChooser.showDialog(this, "Seleziona un colore", dataOpzioni.coloreSfondo); 
+        dataOpzioni.coloreSfondo = JColorChooser.showDialog(this, bundle.getString("selectColor"), dataOpzioni.coloreSfondo); 
         setBackground(dataOpzioni.coloreSfondo);
         repaint();
 		try {
@@ -459,7 +608,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnColoreTesto() {
-        dataOpzioni.coloreTesto = JColorChooser.showDialog(this, "Seleziona un colore", dataOpzioni.coloreTesto); 
+        dataOpzioni.coloreTesto = JColorChooser.showDialog(this, bundle.getString("selectColor"), dataOpzioni.coloreTesto); 
         p.setForeground(dataOpzioni.coloreTesto);
         repaint();
 		try {
@@ -483,6 +632,26 @@ public class BriscoFrame extends JFrame {
 					e.printStackTrace();
 				}
 		   }
+	}
+	
+	private void SetLocale(int quale) {
+		dataOpzioni.locale=quale;
+		try {
+			salvaStato(gson.toJson(dataOpzioni));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JOptionPane.showMessageDialog(this, bundle.getString("restartMessage"), bundle.getString("Attention"), JOptionPane.OK_OPTION);		System.exit(0);
+	}
+	
+	private Locale LoadLocale(int quale) {
+		switch (quale) {
+			case 1: return Locale.ENGLISH; 
+			case 2: return new Locale("es", "ES"); 
+			default:
+				return Locale.ITALIAN;
+		}
 	}
 	
 }

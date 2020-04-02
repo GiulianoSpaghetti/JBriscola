@@ -119,27 +119,18 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 		int i;
 		punto.y=fm.getHeight()+20+spaziatura+img.getHeight()*2;
 		for (i=0; i<mano.size(); i++) {
-			if (i!=iCartaGiocata)
-				gm.drawImage(img, punto.x, punto.y, p);
-			else
-				gm.drawImage(mano.get(iCartaGiocata).GetImmagine(), Carta.GetLarghezzaImmagine()/2+Carta.GetLarghezzaImmagine()+spaziatura ,fm.getHeight()+20+Carta.GetAltezzaImmagine(), p);
+			if (gm!=null)
+				if (i!=iCartaGiocata)
+					gm.drawImage(img, punto.x, punto.y, p);
+				else
+					gm.drawImage(mano.get(iCartaGiocata).GetImmagine(), Carta.GetLarghezzaImmagine()/2+Carta.GetLarghezzaImmagine()+spaziatura ,fm.getHeight()+20+Carta.GetAltezzaImmagine(), p);
 			punto.x=punto.x+img.getWidth()+spaziatura;
 		}
 		punto.y=punto.y+img.getHeight()+fm.getHeight()+spaziatura;
-		gm.drawString(nome, 0, punto.y);
-		punto.y=punto.y+fm.getHeight();
+		if (gm!=null)
+			gm.drawString(nome, 0, punto.y);
+		punto.y=punto.y+fm.getHeight()+img.getHeight();
 		return punto;
-/*		System.out.println("Carte di "+ nome);
-		int i;
-		for (i=0; i<mano.size(); i++)
-			if (i!=iCartaGiocata)
-			System.out.print(mano.get(i));
-		if (mano.size()>iCartaGiocata)
-			System.out.println("Carta giocata: "+mano.get(iCartaGiocata));
-		System.out.println();
-		System.out.println();*/
-
-
 	}
 
 }
