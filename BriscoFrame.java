@@ -89,16 +89,19 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setColoreSfondo(Color.GREEN);
 			dataOpzioni.setColoreTesto(Color.BLACK);
 			dataOpzioni.setFont(new Font("Serif", Font.PLAIN, 20));
-			dataOpzioni.setLocale(2);
-			dataOpzioni.setDimensioni(new Point(550,5200));
+			dataOpzioni.setLocale(3);
+			dataOpzioni.setDimensioni(new Point(550,520));
+			dataOpzioni.setIFTTTKey("");
 			salvaStato(gson.toJson(dataOpzioni));
 		}
+		bundle=Bundle;
 		bundle=ResourceBundle.getBundle("JBriscolaMessages", LoadLocale(dataOpzioni.locale));
 		if (dataOpzioni.cartaAlta) {
 			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null, bundle);
 			primaUtente=cartaAlta.giocaPrimaUtente();
 			cartaAlta.dispose();
-		}
+		} else
+			primaUtente=true;
 		setBackground(dataOpzioni.coloreSfondo);
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
@@ -304,14 +307,14 @@ public class BriscoFrame extends JFrame {
 		setVisible(true);
 		if (dataOpzioni.upgrades)
 			OnAggiornamenti(false);
-		Thread t=new Thread( new Runnable() { 
+		Thread thread=new Thread( new Runnable() { 
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				IFTTTConnect("JBriscola.start", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, dataOpzioni.mazzo);
 
 			}});
-		t.start();
+		thread.start();
 	}
 	
 	private void OnNuovaPartita(boolean avvisa, boolean inizializza) throws FileNotFoundException, IOException {

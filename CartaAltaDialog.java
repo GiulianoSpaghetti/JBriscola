@@ -38,6 +38,7 @@ public class CartaAltaDialog extends JDialog {
 	
 	public CartaAltaDialog(JFrame Parent, String nomeMazzo, Font f, ResourceBundle b) {
 		super(Parent, b.getString("mostValuableCardGame"), Dialog.ModalityType.DOCUMENT_MODAL);
+		int i;
 		bundle=b;
 		el=new ElaboratoreCarteBriscola(true);
 		try {
@@ -49,6 +50,11 @@ public class CartaAltaDialog extends JDialog {
 		}
 		mazzo=new Mazzo(el);
 		rand=new Random();
+		i=rand.nextInt(100);
+		if (i%3==3)
+			primaUtente=false;
+		else
+			primaUtente=true;
 		p=new JPanel();
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
