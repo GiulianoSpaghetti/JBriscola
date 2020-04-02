@@ -23,7 +23,7 @@ Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manu
 
 # Set di mazzi arbitrario
 Sono necessari 4 semi, ognuno di 10 carte.
-*Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 0 è 10 di bastoni, in sequenza)
+*Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 9 è 10 di bastoni, in sequenza)
 
 *Coppe è rappresentato con le immagini jpeg coi numeri da 10 a 19
 
