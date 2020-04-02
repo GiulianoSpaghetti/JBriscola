@@ -18,7 +18,8 @@ Ha due possibilità di inserimento degli input nella fase di gioco:
 
 E' presente  un giochino iniziale che consente di stabilire chi gioca per primo: il gioco della carta più alta, si pesca una carta dal mazzo e chi ha il valore più alto è il primo di mano.
 
-E' possibile giocare con un set di mazzi arbitrario
+E' possibile giocare con un set di mazzi arbitrario. La cartella dei mazzi deve essere nella directory di lavoro.
+
 Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manualmente la nuova voce al menù, non come in wxBriscola.
 
 # Set di mazzi arbitrario
