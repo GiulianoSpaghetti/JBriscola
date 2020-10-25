@@ -51,11 +51,10 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 		briscola=Carta.GetCarta(b);
 		img=null;
 		rand=new Random();
-		CaricaImmagine();
 	}
 	
 	public void CaricaImmagine() throws FileNotFoundException, IOException  {
-		String s=Carta.GetPathCarte()+"retro carte pc.jpg";
+		String s=Carta.GetPathCarte()+"retro carte pc.png";
 		File f=new File(s);
 		if (!f.exists())
 			throw new FileNotFoundException("Il file "+s+" non esiste.");
@@ -63,6 +62,10 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 			img=ImageIO.read(f);
 	}
 	
+	
+	public void CaricaImmagine(Class<BriscoFrame> class1) throws FileNotFoundException, IOException  {
+			img=ImageIO.read(class1.getClassLoader().getResource("Napoletano/retro carte pc.png"));
+	}
 	@Override
 	public int Gioca(Vector<Carta> mano, int iCarta) {
 		// TODO Auto-generated method stub

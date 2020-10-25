@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -48,7 +49,7 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3149121715539056995L;
-	private String version="0.2", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String version="0.3", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
@@ -56,7 +57,7 @@ public class BriscoFrame extends JFrame {
 	private GiocatoreHelperCpu motoreCpu=null;
 	private JMenuBar menu;
 	private JMenu fileMenu, infoMenu, colorMenu, languageMenu;
-	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font, en, es, it;
+	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font, en, es, it, fr;
 	private boolean primaUtente;
 	private JBriscolaOpzioni dataOpzioni;
 	private static Gson gson = new Gson();
@@ -105,8 +106,15 @@ public class BriscoFrame extends JFrame {
 		setBackground(dataOpzioni.coloreSfondo);
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
-		Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
-		motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+		if (dataOpzioni.getMazzo().equals("Napoletano")) {
+			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle, BriscoFrame.class);
+			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+			motoreCpu.CaricaImmagine(BriscoFrame.class);
+		} else {
+			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
+			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+			motoreCpu.CaricaImmagine();
+		}
 		mazzo=new Mazzo(e);
 		utente=new Giocatore(new GiocatoreHelperUtente(), dataOpzioni.nomeUtente, dataOpzioni.ordina, 3);
 		cpu=new Giocatore(motoreCpu, dataOpzioni.nomeCpu, true, 3);
@@ -284,17 +292,26 @@ public class BriscoFrame extends JFrame {
 				// TODO Auto-generated method stub
 				SetLocale(2);
 			}});
-		it=new JMenuItem(bundle.getString("it"));
-		it.addActionListener(new ActionListener() {
+		fr=new JMenuItem(bundle.getString("fr"));
+		fr.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				SetLocale(3);
 			}});
+		it=new JMenuItem(bundle.getString("it"));
+		it.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SetLocale(4);
+			}});
 		languageMenu=new JMenu(bundle.getString("Translations"));
 		languageMenu.add(en);
 		languageMenu.add(es);
+		languageMenu.add(fr);
 		languageMenu.add(it);
 		menu.add(fileMenu);
 		menu.add(colorMenu);
@@ -315,6 +332,7 @@ public class BriscoFrame extends JFrame {
 
 			}});
 		thread.start();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("wxBriscola.ico")));
 	}
 	
 	private void OnNuovaPartita(boolean avvisa, boolean inizializza) throws FileNotFoundException, IOException {
@@ -333,8 +351,15 @@ public class BriscoFrame extends JFrame {
 			e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 			mazzo=new Mazzo(e);
 			br=new CartaHelperBriscola(e);
-			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
-			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+			if (dataOpzioni.getMazzo().equals("Napoletano")) {
+				Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle, BriscoFrame.class);
+				motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+				motoreCpu.CaricaImmagine(BriscoFrame.class);
+			} else {
+				Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
+				motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
+				motoreCpu.CaricaImmagine();
+			}
 			utente=new Giocatore(new GiocatoreHelperUtente(), dataOpzioni.nomeUtente, dataOpzioni.ordina, 3);
 			cpu=new Giocatore(motoreCpu, dataOpzioni.nomeCpu, true, 3);
 			primo=utente;
@@ -554,11 +579,41 @@ public class BriscoFrame extends JFrame {
 		if (!f.exists())
 			throw new FileNotFoundException(bundle.getString("Path")+ Carta.GetPathMazzi()+bundle.getString("doesntExists"));
 		File[] dirs=f.listFiles();
+		i=new JMenuItem("Napoletano");
+		i.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				String mazzo=Carta.GetNomeMazzo();
+				try {
+					Carta.CaricaImmagini("Napoletano", bundle, BriscoFrame.class);
+					motoreCpu.CaricaImmagine(BriscoFrame.class);
+					p.CaricaImmagine(BriscoFrame.class);			
+					repaint();
+					dataOpzioni.dimensioni=p.getDimensioni();
+					setSize(dataOpzioni.dimensioni.x, dataOpzioni.dimensioni.y);
+					dataOpzioni.setMazzo("Napoletano");
+					salvaStato(gson.toJson(dataOpzioni));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+					try {
+						Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
+						motoreCpu.CaricaImmagine(BriscoFrame.class);
+						p.CaricaImmagine();
+						repaint();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}});
+		m.add(i);
 		for (File file: dirs) {
-			if (file.isDirectory()) {
+			if (file.isDirectory() && !file.getName().equals("Napoletano")) {
 				i=new JMenuItem(file.getName());
 				i.addActionListener(new ActionListener() {
-
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						// TODO Auto-generated method stub
@@ -576,8 +631,8 @@ public class BriscoFrame extends JFrame {
 							// TODO Auto-generated catch block
 							JOptionPane.showMessageDialog(null, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							try {
-								Carta.CaricaImmagini(mazzo, bundle);
-								motoreCpu.CaricaImmagine();
+								Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
+								motoreCpu.CaricaImmagine(BriscoFrame.class);
 								p.CaricaImmagine();
 								repaint();
 							} catch (IOException e1) {
@@ -590,6 +645,7 @@ public class BriscoFrame extends JFrame {
 			}
 		}
 		return m;
+		
 	}
 	
 	private void OnAbout() {
@@ -652,6 +708,7 @@ public class BriscoFrame extends JFrame {
 		switch (quale) {
 			case 1: return Locale.ENGLISH; 
 			case 2: return new Locale("es", "ES"); 
+			case 3: return Locale.FRENCH;
 			default:
 				return Locale.ITALIAN;
 		}

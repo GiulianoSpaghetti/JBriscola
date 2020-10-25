@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -38,6 +39,20 @@ public class Carta {
 		CaricaImmagini(nomeMazzo, b);
 	}
 	
+	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
+		carte=new Vector<Carta>();
+		if (carte.size()>0)
+			throw new IndexOutOfBoundsException("Chiamato carta::inizializza con carte.size()==" +carte.size());
+		if (h==null)
+			throw new NullPointerException("Chiamato carta::inizializza con h==null");
+		helper=h;
+		int i;
+		for (i=0; i<n; i++) {
+			carte.add(new Carta(i));
+		}
+		CaricaImmagini(nomeMazzo, b, class1);
+	}
+	
 	public static void dealloca() {
 		carte.clear();
 		helper=null;
@@ -46,14 +61,14 @@ public class Carta {
 		return carte.get(quale);
 	}
 	public static void CaricaImmagini(String mazzo, ResourceBundle b) throws FileNotFoundException {
-		path=System.getProperty("user.dir")+File.separator+"Mazzi"+File.separator;
+		path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
 		nomeMazzo=mazzo;
 		String pathCompleta=path+mazzo+File.separator;
 		String s;
 		File f;
 		int i;
 		for (i=0; i<carte.size(); i++) {
-			s=pathCompleta+i+".jpg";
+			s=pathCompleta+i+".png";
 			f=new File(s);
 			if (!f.exists()) {
 				throw new FileNotFoundException(b.getString("theFile") + s + b.getString("doesntExists"));
@@ -61,6 +76,20 @@ public class Carta {
 			try {
 				carte.get(i).SetImmagine(s);
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void CaricaImmagini(String mazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
+		path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
+		nomeMazzo=mazzo;
+		int i;
+		for (i=0; i<carte.size(); i++) {
+			try {
+				carte.get(i).SetImmagine(class1.getClassLoader().getResource("Napoletano/"+i+".png"));
+				} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -77,6 +106,7 @@ public class Carta {
 	public String GetSemeStr() { return semeStr;}
 	
 	public void SetImmagine(String path) throws IOException {img=ImageIO.read(new File(path));}
+	public void SetImmagine(URL path) throws IOException {img=ImageIO.read(path);}
 	public BufferedImage GetImmagine() {return img;}
 
 	

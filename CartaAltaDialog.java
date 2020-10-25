@@ -42,7 +42,10 @@ public class CartaAltaDialog extends JDialog {
 		bundle=b;
 		el=new ElaboratoreCarteBriscola(true);
 		try {
-			Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle);
+			if (nomeMazzo=="Napoletano")
+				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle, BriscoFrame.class);
+			else
+				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), b.getString("Error"), JOptionPane.OK_OPTION);

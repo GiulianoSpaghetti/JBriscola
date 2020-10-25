@@ -42,7 +42,10 @@ public class BriscoPanel extends JPanel {
 		mazzo=m;
 		helper=b;
 		spaziatura=10;
-		CaricaImmagine();
+		if (Carta.GetNomeMazzo().equals("Napoletano"))
+			CaricaImmagine(BriscoFrame.class);
+		else
+			CaricaImmagine();
 		if (!primaUtente)
 			Computer.Gioca(0);
 	}
@@ -64,12 +67,16 @@ public class BriscoPanel extends JPanel {
 	}
 	
 	public void CaricaImmagine() throws FileNotFoundException, IOException  {
-		String s=Carta.GetPathCarte()+"retro carte mazzo.jpg";
+		String s=Carta.GetPathCarte()+"retro carte mazzo.png";
 		File f=new File(s);
 		if (!f.exists())
 			throw new FileNotFoundException(Bundle.getString("theFile")+s+Bundle.getString("doesntExists"));
 		else
 			img=ImageIO.read(f);
+	}
+	
+	public void CaricaImmagine(Class<BriscoFrame> class1) throws FileNotFoundException, IOException {
+		img=ImageIO.read(class1.getClassLoader().getResource("Napoletano/retro carte mazzo.png"));
 	}
 	
 	public int controllaCoordinate(int x, int y) {
