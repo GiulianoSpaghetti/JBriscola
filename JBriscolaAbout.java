@@ -90,8 +90,12 @@ public class JBriscolaAbout extends JDialog {
 		c.gridy=5;
 		p.add(new JLabel(bundle.getString("modianoAlert")), c);
 		c.gridy=6;
-		p.add(new JLabel(bundle.getString("translationAlert")),c);
+		p.add(new JLabel(bundle.getString("nintendoAlert")), c);
 		c.gridy=7;
+		p.add(new JLabel(bundle.getString("translationAlert")),c);
+		c.gridy=8;
+		p.add(new JLabel(bundle.getString("translationAlert1")),c);
+		c.gridy=9;
 		JButton ok=new JButton(bundle.getString("Ok"));
 		ok.addActionListener(new ActionListener() {
 
