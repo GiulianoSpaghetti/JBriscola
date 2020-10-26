@@ -1,0 +1,2 @@
+find /home -name "jbriscola.json" -exec rm {} \;
+

@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+%:
+	dh $@ --buildsystem=meson
+
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all,+bindnow
+
+override_dh_auto_configure:
+override_dh_auto_build:
+override_dh_auto_test:
+override_dh_auto_install:
+	mkdir -p debian/tmp/usr/share/applications
+	cp ./JBriscola.desktop debian/tmp/usr/share/applications
+	mkdir -p debian/tmp/usr/share/icons
+	cp ./JBriscola.ico debian/tmp/usr/share/icons
+	mkdir -p debian/tmp/opt/jbriscola
+	cp ./jbriscola-0.3.jar debian/tmp/opt/jbriscola
+override_dh_usrlocal:
+override_dh_missing:
+	dh_missing --fail-missing
+override_dh_dwz:
