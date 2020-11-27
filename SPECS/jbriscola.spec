@@ -1,5 +1,5 @@
 Name:               jbriscola
-Version:            0.3
+Version:            0.3.1
 Release:            1%{?dist}
 License:            GPLv3+
 Group:              Amusements/Games/CardGames
@@ -24,12 +24,15 @@ Manca il multiplayer...
 %meson_install
 
 %files
-/opt/jbriscola/jbriscola-0.3.jar
+/opt/jbriscola/jbriscola-0.3.1.jar
 %{_datadir}/applications/JBriscola.desktop
 %{_datadir}/icons/JBriscola.ico
 
 
 %changelog
+* Fri Nov 27 2020 Giulio Sorrentino <gsorre84@gmail.com> 0.3.1-1
+- Risolto il bug di visualizzazione dei mazzi dr francy e gatti
+- Risolto il bug che non aggiornava le metriche del font al cambio dello stesso
 
 * Fri Nov 27 2020 Giulio Sorrentino <gsorre84@gmail.com> 0.3-1
 - Initial release (#00000)
