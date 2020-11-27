@@ -92,6 +92,7 @@ public class BriscoPanel extends JPanel {
 	
 	public void setFont(Font font) {
 		f=font;
+		fm=null;
 		repaint();
 	}
 	
@@ -122,8 +123,19 @@ public class BriscoPanel extends JPanel {
 		if (mazzo.GetNumeroCarte()>0) {
 			p1.x=p1.x+spaziatura*3;
 			p1.y=p1.y+fm.getHeight()+spaziatura;
+			if (img.getWidth()>img.getHeight()) {
+				p1.y=p1.y+img.getWidth()-img.getHeight()*2+fm.getHeight()*2;
+				p1.x=p1.x-img.getHeight()/2+spaziatura+fm.stringWidth(stringaCarte)/2+5;
+				p2.y=p1.y+img.getHeight();
+				p2.x=p1.x-img.getHeight()/2;
+			} else  {			
+				p1.y=p1.y+img.getHeight()-img.getWidth();
+				p1.x=p1.x-img.getWidth()/2+spaziatura;
+				p2.y=p1.y+img.getWidth()-img.getHeight();
+				p2.x=p1.x+fm.stringWidth(stringaCarte)/2;
+			}
 			g.drawImage(Carta.GetImmagine(helper.GetCartaBriscola()), p1.x, p1.y, this);
-			g.drawImage(img, p1.x-img.getHeight()/2+spaziatura, p1.y+img.getWidth()-img.getHeight(), this);
+			g.drawImage(img, p2.x, p2.y, this);
 		}
 	}	
 }
