@@ -11,7 +11,7 @@ import java.util.Vector;
 import javax.imageio.ImageIO;
 
 public class Carta {
-	private int seme, valore, punteggio;
+	private int seme, valore, punteggio, tipoCarta;
 	private String semeStr;
 	private static CartaHelper helper;
 	private BufferedImage img;
@@ -21,7 +21,7 @@ public class Carta {
 		seme=helper.GetSeme(n);
 		valore=helper.GetValore(n);
 		punteggio=helper.GetPunteggio(n);
-		semeStr=helper.GetSemeStr(n);
+
 		img=null;
 	}
 	
@@ -75,6 +75,10 @@ public class Carta {
 			}
 			try {
 				carte.get(i).SetImmagine(s);
+				carte.get(i).tipoCarta=1001;
+		        if (mazzo.equals("Bergamasco") || mazzo.equals("Bolognese") || mazzo.equals("Bresciano")  || mazzo.equals("Napoletano") || mazzo.equals("Romagnolo") || mazzo.equals("Sardo") || mazzo.equals("Siciliano") || mazzo.equals("Trientino") || mazzo.equals("Trevigiano") || mazzo.equals("Trentino") || mazzo.equals("Triestino"))
+		            carte.get(i).tipoCarta=1000;
+				carte.get(i).semeStr=helper.GetSemeStr(carte.get(i).GetNumero(),carte.get(i).tipoCarta);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

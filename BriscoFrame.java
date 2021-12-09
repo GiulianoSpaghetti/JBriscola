@@ -49,7 +49,7 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3149121715539056995L;
-	private String version="0.3", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String version="0.4", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
@@ -63,10 +63,11 @@ public class BriscoFrame extends JFrame {
 	private static Gson gson = new Gson();
 	private static String path="JBriscola"+File.separator+"jbriscola.json";
 	private ResourceBundle bundle;  
-	
+	private Color testo, sfondo;
 	ElaboratoreCarteBriscola e;
 	CartaHelperBriscola br;
 	Timer t;
+	Font f;
 	public BriscoFrame(ResourceBundle Bundle) throws FileNotFoundException, IOException {
 		super("JBriscola");
 		int i;
@@ -89,7 +90,8 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setMazzo("Napoletano");
 			dataOpzioni.setColoreSfondo(Color.GREEN);
 			dataOpzioni.setColoreTesto(Color.BLACK);
-			dataOpzioni.setFont(new Font("Serif", Font.PLAIN, 20));
+			f=new Font("Serif", Font.PLAIN, 20); 
+			dataOpzioni.setFont(f);
 			dataOpzioni.setLocale(3);
 			dataOpzioni.setDimensioni(new Point(550,520));
 			dataOpzioni.setIFTTTKey("");
@@ -103,7 +105,7 @@ public class BriscoFrame extends JFrame {
 			cartaAlta.dispose();
 		} else
 			primaUtente=true;
-		setBackground(dataOpzioni.coloreSfondo);
+		//setBackground(dataOpzioni.coloreSfondo);
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
 		if (dataOpzioni.getMazzo().equals("Napoletano")) {
@@ -125,8 +127,11 @@ public class BriscoFrame extends JFrame {
 			secondo.AddCarta(mazzo);
 		}
 		t=new Timer();
-		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, dataOpzioni.font, bundle);
-		p.setForeground(dataOpzioni.coloreTesto);
+		testo=dataOpzioni.getColoreTesto();
+		sfondo=dataOpzioni.getColoreSfondo();
+		f=dataOpzioni.getFont();
+		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, f, bundle);
+		//p.setForeground(dataOpzioni.coloreTesto);
 		getContentPane().add(p);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addKeyListener(new KeyListener() {
@@ -654,8 +659,9 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnColoreSfondo() {
-        dataOpzioni.coloreSfondo = JColorChooser.showDialog(this, bundle.getString("selectColor"), dataOpzioni.coloreSfondo); 
-        setBackground(dataOpzioni.coloreSfondo);
+        JColorChooser.showDialog(this, bundle.getString("selectColor"), sfondo); 
+        setBackground(sfondo);
+        dataOpzioni.setColoreSfondo(sfondo);
         repaint();
 		try {
 			salvaStato(gson.toJson(dataOpzioni));
@@ -667,8 +673,9 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnColoreTesto() {
-        dataOpzioni.coloreTesto = JColorChooser.showDialog(this, bundle.getString("selectColor"), dataOpzioni.coloreTesto); 
-        p.setForeground(dataOpzioni.coloreTesto);
+        JColorChooser.showDialog(this, bundle.getString("selectColor"), testo); 
+        p.setForeground(testo);
+        dataOpzioni.setColoreTesto(testo);
         repaint();
 		try {
 			salvaStato(gson.toJson(dataOpzioni));
@@ -682,8 +689,8 @@ public class BriscoFrame extends JFrame {
 		   JFontChooser fontChooser = new JFontChooser();
 		   int result = fontChooser.showDialog(this);
 		   if (result == JFontChooser.OK_OPTION) {
-		        dataOpzioni.font = fontChooser.getSelectedFont(); 
-		        p.setFont(dataOpzioni.font);
+		        f = fontChooser.getSelectedFont(); 
+		        p.setFont(f);
 				try {
 					salvaStato(gson.toJson(dataOpzioni));
 				} catch (IOException e) {

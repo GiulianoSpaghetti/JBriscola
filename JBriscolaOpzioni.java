@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
+
 public class JBriscolaOpzioni {
 
 	String nomeUtente, nomeCpu, mazzo;
 	int secondi, locale;
 	boolean punti, ordina, avvisa, cartaAlta, upgrades;
-	Color coloreSfondo, coloreTesto;
-	Font font;
+	int rgbTesto, rgbSfondo;
+	String nomeFont;
+	int fontsize, fontstyle;
 	String IFTTTKey;
 	Point dimensioni;
 	
@@ -38,22 +41,24 @@ public class JBriscolaOpzioni {
 	}
 	
 	public Font getFont() {
-		return font;
+		return new Font (nomeFont, fontsize, fontstyle);
 	}
 	public void setFont(Font font) {
-		this.font = font;
+		nomeFont=font.getName();
+		fontsize=font.getSize();
+		fontstyle=font.getStyle();
 	}
 	public Color getColoreTesto() {
-		return coloreTesto;
+		return new Color(rgbTesto);
 	}
 	public void setColoreTesto(Color coloreTesto) {
-		this.coloreTesto = coloreTesto;
+		rgbTesto=coloreTesto.getRGB();
 	}
 	public Color getColoreSfondo() {
-		return coloreSfondo;
+		return new Color(rgbSfondo);
 	}
 	public void setColoreSfondo(Color coloreSfondo) {
-		this.coloreSfondo = coloreSfondo;
+		rgbSfondo = coloreSfondo.getRGB();
 	}
 	public String getMazzo() {
 		return mazzo;
