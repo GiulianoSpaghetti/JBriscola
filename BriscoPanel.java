@@ -106,11 +106,13 @@ public class BriscoPanel extends JPanel {
 	}
 	
 	public void paintComponent(Graphics gr) {
-		if (fm==null)
-			fm=gr.getFontMetrics();
 		Graphics2D g = (Graphics2D)gr;
 		g.setFont(f);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		if (fm==null) {
+			g.clearRect(0,0,5000,5000);
+			fm=gr.getFontMetrics();
+		}
 	    String stringaCarte=Bundle.getString("inDeckRemains")+mazzo.GetNumeroCarteStr()+Bundle.getString("cards");
 		p1=Utente.Paint(this, g, fm, spaziatura);
 		p2=Computer.Paint(this, g, fm, spaziatura);
