@@ -659,9 +659,11 @@ public class BriscoFrame extends JFrame {
 	
 	private void OnColoreSfondo() {
 		Color sfondo=dataOpzioni.getColoreSfondo();
-        JColorChooser.showDialog(this, bundle.getString("selectColor"), sfondo); 
+        sfondo=JColorChooser.showDialog(this, bundle.getString("selectColor"), sfondo); 
+        if (sfondo == null)
+        	return;
         setBackground(sfondo);
-        dataOpzioni.setColoreSfondo(sfondo);
+      dataOpzioni.setColoreSfondo(sfondo);
         repaint();
 		try {
 			salvaStato(gson.toJson(dataOpzioni));
@@ -674,9 +676,11 @@ public class BriscoFrame extends JFrame {
 	
 	private void OnColoreTesto() {
 		Color testo=dataOpzioni.getColoreTesto();
-        JColorChooser.showDialog(this, bundle.getString("selectColor"), testo); 
-        p.setForeground(testo);
-        dataOpzioni.setColoreTesto(testo);
+        testo=JColorChooser.showDialog(this, bundle.getString("selectColor"), testo); 
+        if (testo==null)
+        	return;
+       p.setForeground(testo);
+       dataOpzioni.setColoreTesto(testo);
         repaint();
 		try {
 			salvaStato(gson.toJson(dataOpzioni));
