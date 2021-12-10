@@ -63,7 +63,6 @@ public class BriscoFrame extends JFrame {
 	private static Gson gson = new Gson();
 	private static String path="JBriscola"+File.separator+"jbriscola.json";
 	private ResourceBundle bundle;  
-	private Color testo, sfondo;
 	ElaboratoreCarteBriscola e;
 	CartaHelperBriscola br;
 	Timer t;
@@ -72,11 +71,11 @@ public class BriscoFrame extends JFrame {
 		super("JBriscola");
 		int i;
 		if (System.getProperty("os.name").contains("Windows"))
-			path=System.getenv("APPDATA")+File.separator+path;
+			path=System.getenv("APPDATA")+File.separator+path;		
 		else
-			path=System.getProperty("user.home")+File.separator+".config"+File.separator+path;
+				path=System.getProperty("user.home")+File.separator+".config"+File.separator+path;
 		try {
-			dataOpzioni=leggiStato();
+		  dataOpzioni=leggiStato();
 		} catch (UnsupportedEncodingException | FileNotFoundException e) {
 			dataOpzioni=new JBriscolaOpzioni();
 			dataOpzioni.setAvvisa(true);
@@ -91,8 +90,8 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setColoreSfondo(Color.GREEN);
 			dataOpzioni.setColoreTesto(Color.BLACK);
 			f=new Font("Serif", Font.PLAIN, 20); 
-			dataOpzioni.setFont(f);
-			dataOpzioni.setLocale(3);
+	     	dataOpzioni.setFont(f);
+			dataOpzioni.setLocale(4);
 			dataOpzioni.setDimensioni(new Point(550,520));
 			dataOpzioni.setIFTTTKey("");
 			salvaStato(gson.toJson(dataOpzioni));
@@ -105,7 +104,7 @@ public class BriscoFrame extends JFrame {
 			cartaAlta.dispose();
 		} else
 			primaUtente=true;
-		//setBackground(dataOpzioni.coloreSfondo);
+		setBackground(dataOpzioni.getColoreSfondo());
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
 		if (dataOpzioni.getMazzo().equals("Napoletano")) {
@@ -127,11 +126,12 @@ public class BriscoFrame extends JFrame {
 			secondo.AddCarta(mazzo);
 		}
 		t=new Timer();
-		testo=dataOpzioni.getColoreTesto();
-		sfondo=dataOpzioni.getColoreSfondo();
+		
+		
 		f=dataOpzioni.getFont();
 		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, f, bundle);
-		//p.setForeground(dataOpzioni.coloreTesto);
+		p.setForeground(dataOpzioni.getColoreTesto());
+		p.setBackground(dataOpzioni.getColoreSfondo());
 		getContentPane().add(p);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addKeyListener(new KeyListener() {
@@ -218,7 +218,6 @@ public class BriscoFrame extends JFrame {
 				}
 			}});
 		fileMenu.add(nuovaPartita);
-		
 		font=new JMenuItem(bundle.getString("Font"));
 		font.addActionListener(new ActionListener() {
 
@@ -659,6 +658,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnColoreSfondo() {
+		Color sfondo=dataOpzioni.getColoreSfondo();
         JColorChooser.showDialog(this, bundle.getString("selectColor"), sfondo); 
         setBackground(sfondo);
         dataOpzioni.setColoreSfondo(sfondo);
@@ -673,6 +673,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnColoreTesto() {
+		Color testo=dataOpzioni.getColoreTesto();
         JColorChooser.showDialog(this, bundle.getString("selectColor"), testo); 
         p.setForeground(testo);
         dataOpzioni.setColoreTesto(testo);
@@ -691,6 +692,7 @@ public class BriscoFrame extends JFrame {
 		   if (result == JFontChooser.OK_OPTION) {
 		        f = fontChooser.getSelectedFont(); 
 		        p.setFont(f);
+		        dataOpzioni.setFont(f);
 				try {
 					salvaStato(gson.toJson(dataOpzioni));
 				} catch (IOException e) {

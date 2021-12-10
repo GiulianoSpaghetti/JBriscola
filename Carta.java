@@ -93,6 +93,8 @@ public class Carta {
 		for (i=0; i<carte.size(); i++) {
 			try {
 				carte.get(i).SetImmagine(class1.getClassLoader().getResource("Napoletano/"+i+".png"));
+				carte.get(i).tipoCarta=1000;
+				carte.get(i).semeStr=helper.GetSemeStr(carte.get(i).GetNumero(),carte.get(i).tipoCarta);
 				} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

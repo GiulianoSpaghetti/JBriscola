@@ -8,12 +8,10 @@ import javax.swing.JOptionPane;
 
 public class JBriscolaOpzioni {
 
-	String nomeUtente, nomeCpu, mazzo;
-	int secondi, locale;
+	String nomeUtente, nomeCpu, mazzo, nomeFont;
+	int secondi, locale, fontsize, fontstyle;;
 	boolean punti, ordina, avvisa, cartaAlta, upgrades;
 	int rgbTesto, rgbSfondo;
-	String nomeFont;
-	int fontsize, fontstyle;
 	String IFTTTKey;
 	Point dimensioni;
 	
@@ -41,10 +39,12 @@ public class JBriscolaOpzioni {
 	}
 	
 	public Font getFont() {
+		JOptionPane.showInputDialog("Nome Font=" + nomeFont);
 		return new Font (nomeFont, fontsize, fontstyle);
 	}
 	public void setFont(Font font) {
 		nomeFont=font.getName();
+		JOptionPane.showInputDialog("Nome Font=" + nomeFont);
 		fontsize=font.getSize();
 		fontstyle=font.getStyle();
 	}

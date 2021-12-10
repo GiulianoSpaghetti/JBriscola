@@ -1,5 +1,6 @@
 package org.numerone.altervista.jbriscola;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class BriscoPanel extends JPanel {
@@ -108,7 +110,7 @@ public class BriscoPanel extends JPanel {
 			fm=gr.getFontMetrics();
 		Graphics2D g = (Graphics2D)gr;
 		g.setFont(f);
-	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	    String stringaCarte=Bundle.getString("inDeckRemains")+mazzo.GetNumeroCarteStr()+Bundle.getString("cards");
 		p1=Utente.Paint(this, g, fm, spaziatura);
 		p2=Computer.Paint(this, g, fm, spaziatura);
