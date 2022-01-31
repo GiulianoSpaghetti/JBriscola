@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -38,6 +39,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -241,7 +243,7 @@ public class BriscoFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				dispatchEvent(new WindowEvent(BriscoFrame.this, WindowEvent.WINDOW_CLOSING));
 			}});
 		fileMenu.add(esci);
 		infoMenu=new JMenu(bundle.getString("?"));
