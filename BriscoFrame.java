@@ -603,7 +603,7 @@ public class BriscoFrame extends JFrame {
 					salvaStato(gson.toJson(dataOpzioni));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 					try {
 						Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
 						motoreCpu.CaricaImmagine(BriscoFrame.class);
@@ -611,7 +611,7 @@ public class BriscoFrame extends JFrame {
 						repaint();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(BriscoFrame.this, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}});
@@ -635,7 +635,7 @@ public class BriscoFrame extends JFrame {
 							salvaStato(gson.toJson(dataOpzioni));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(null, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							try {
 								Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
 								motoreCpu.CaricaImmagine(BriscoFrame.class);
@@ -643,7 +643,7 @@ public class BriscoFrame extends JFrame {
 								repaint();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
-								JOptionPane.showMessageDialog(null, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(BriscoFrame.this, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}});
