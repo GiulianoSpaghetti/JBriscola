@@ -40,16 +40,19 @@ Sono presenti, in oltre:
 Queste 42 immagini vanno posizionate in una sottocartella della cartella mazzi presente nella directory di lavoro.
 Il programma vedrà la nuova cartella e la aggiungerà automaticamente al menù mazzi.
 
-# Come tradurre il programma
+# Come localizzare il programma
 
-Per tradurre il programma basta dotarsi di eclipse o di qualsiasi altro editor visuale, scaricare uno dei files JBriscolaMessages_xy.properties e tradurre tutto quello che è a destra del simbolo "=".
-A questo punto, bisogna rinominare il file usando la nominazione a due caratteri della traduzione (se prendete JBriscolaMessages_it.properties e volete tradurlo in tedesco bisogna rinominarlo in JBriscolaMessages_de.properties).
-A questo punto dovete per forza mandarmelo perché bisogna modificare il codice sorgente per aggiungere la nuova lingua, potete farlo usando il pull request su questo sito.
-Sarò felice di darvi il credit.
+Per localizzare il programma basta dotarsi di eclipse o di qualsiasi altro editor visuale, scaricare uno dei files JBriscolaMessages_xy.properties e localizzare tutto quello che è a destra del simbolo "=".
+A questo punto, bisogna rinominare il file usando la nominazione a due caratteri della traduzione (se prendete JBriscolaMessages_it.properties e volete localizzare in tedesco bisogna rinominarlo in JBriscolaMessages_de.properties).
+A questo punto è sufficiente avviare il programma passando come parametri "-Duser.language=xy -Duser.region=XY" per vedere il programma localizzato (esempuio java -Duser.language=fr -Duser.region=FR -jar ./Jbriscola-0.4.2.jar).
+
+Se volete mandarmi le vostre localizzazioni sarò felice di immetterle nel programma origibnale e darvi darvi il credit.
 Ricordatevi che la GPL obbliga a mantenere i credits originali, quindi, per fare, fate i seri...
 
 ![screen-2022-05-24-18-50-27](https://user-images.githubusercontent.com/49764967/170090089-8b48e119-b08d-4f8f-968e-f528b01891a8.png)
 ![screen-2022-05-24-18-50-06](https://user-images.githubusercontent.com/49764967/170090097-71f70454-08b5-472d-ac62-097a053ed222.png)
+![screen-2022-05-24-20-59-26](https://user-images.githubusercontent.com/49764967/170112161-e61a6ba2-caf0-445a-bd1f-3e19e5a57555.png)
+![screen-2022-05-24-20-58-37](https://user-images.githubusercontent.com/49764967/170112169-29b7087e-4673-4d1c-92db-189b46b17840.png)
 
 
 # Webhook di IFTTT
