@@ -45,6 +45,7 @@ Il programma vedrà la nuova cartella e la aggiungerà automaticamente al menù 
 Per tradurre il programma basta dotarsi di eclipse o di qualsiasi altro editor visuale, scaricare uno dei files JBriscolaMessages_xy.properties e tradurre tutto quello che è a destra del simbolo "=".
 A questo punto, bisogna rinominare il file usando la nominazione a due caratteri della traduzione (se prendete JBriscolaMessages_it.properties e volete tradurlo in tedesco bisogna rinominarlo in JBriscolaMessages_de.properties).
 A questo punto dovete per forza mandarmelo perché bisogna modificare il codice sorgente per aggiungere la nuova lingua, potete farlo usando il pull request su questo sito.
+Sarò felice di darvi il credit.
 
 ![screen-2022-05-24-18-50-27](https://user-images.githubusercontent.com/49764967/170090089-8b48e119-b08d-4f8f-968e-f528b01891a8.png)
 ![screen-2022-05-24-18-50-06](https://user-images.githubusercontent.com/49764967/170090097-71f70454-08b5-472d-ac62-097a053ed222.png)
