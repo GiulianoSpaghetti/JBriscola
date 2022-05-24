@@ -42,7 +42,7 @@ public class JBriscolaAbout extends JDialog {
 		c.gridy=2;
 		p.add(new JLabel(bundle.getString("TrumpEmulator")), c);
 		c.gridy=3;
-		sito=new JLabel("<html><font style=\"color: blue\">http://numerone.altervista.org</font></html>");
+		sito=new JLabel("<html><font style=\"color: blue\">https://github.com/numerunix/wxbriscola/</font></html>");
 		sito.addMouseListener(new MouseListener() {
 
 			@Override
@@ -50,7 +50,7 @@ public class JBriscolaAbout extends JDialog {
 				// TODO Auto-generated method stub
 				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				    try {
-						Desktop.getDesktop().browse(new URI("https://numerone.altervista.org"));
+						Desktop.getDesktop().browse(new URI("https://github.com/numerunix/wxbriscola/"));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
