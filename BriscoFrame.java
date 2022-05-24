@@ -51,7 +51,7 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3149121715539056995L;
-	private String version="0.4", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String version="0.4.1", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
