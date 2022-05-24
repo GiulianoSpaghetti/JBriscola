@@ -27,10 +27,6 @@ public class Carta {
 	
 	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b) throws FileNotFoundException {
 		carte=new Vector<Carta>();
-		if (carte.size()>0)
-			throw new IndexOutOfBoundsException("Chiamato carta::inizializza con carte.size()==" +carte.size());
-		if (h==null)
-			throw new NullPointerException("Chiamato carta::inizializza con h==null");
 		helper=h;
 		int i;
 		for (i=0; i<n; i++) {
@@ -41,10 +37,6 @@ public class Carta {
 	
 	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
 		carte=new Vector<Carta>();
-		if (carte.size()>0)
-			throw new IndexOutOfBoundsException("Chiamato carta::inizializza con carte.size()==" +carte.size());
-		if (h==null)
-			throw new NullPointerException("Chiamato carta::inizializza con h==null");
 		helper=h;
 		int i;
 		for (i=0; i<n; i++) {

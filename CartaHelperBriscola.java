@@ -9,16 +9,12 @@ public class CartaHelperBriscola implements CartaHelper {
 	@Override
 	public int GetSeme(int carta) {
 		// TODO Auto-generated method stub
-		if (carta<0 || carta>39)
-			throw new IndexOutOfBoundsException("Chiamato cartahelperbriscola.getSeme con carta = " + carta);
 		return carta/10;
 	}
 
 	@Override
 	public int GetValore(int carta) {
 		// TODO Auto-generated method stub
-		if (carta<0 || carta>39)
-			throw new IndexOutOfBoundsException("Chiamato cartahelperbriscola.getValore con carta = " + carta);
 		return carta%10;
 	}
 
@@ -49,8 +45,6 @@ public class CartaHelperBriscola implements CartaHelper {
 	@Override
 	public String GetSemeStrItaliana(int carta) {
 		// TODO Auto-generated method stub
-		if (carta<0 || carta>39)
-			throw new IndexOutOfBoundsException("Chiamato cartahelperbriscola.getSemeStr con carta = " + carta);
 		String s="";
 		switch(carta/10) {
 			case 0: s="bastoni"; break;
@@ -64,8 +58,6 @@ public class CartaHelperBriscola implements CartaHelper {
 	@Override
 	public String GetSemeStrFrancese(int carta) {
 		// TODO Auto-generated method stub
-		if (carta<0 || carta>39)
-			throw new IndexOutOfBoundsException("Chiamato cartahelperbriscola.getSemeStr con carta = " + carta);
 		String s="";
 		switch(carta/10) {
 			case 0: s="fiori"; break;

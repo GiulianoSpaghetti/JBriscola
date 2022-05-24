@@ -12,10 +12,6 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 	@Override
 	public int Gioca(Vector<Carta> v, int i) {
 		// TODO Auto-generated method stub
-		if (v.size()==0)
-			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, int) con v.size==0");
-		if (i>=v.size() || i<0)
-			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, int) con i="+i);
 		/*Scanner in=new Scanner(System.in);
 		do {
 			System.out.print("Inserire l'indice della carta giocata: ");
@@ -30,10 +26,6 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 	@Override
 	public int Gioca(Vector<Carta> v, Carta c, int i) {
 		// TODO Auto-generated method stub
-		if (v.size()==0)
-			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, Carta, int) con v.size==0");
-		if (i>=v.size() || i<0)
-			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperUtente.gioca(Vector<Carta>, Carta, int) con i="+i);
 	/*	Scanner in=new Scanner(System.in);
 		do {
 			System.out.print("Inserire l'indice della carta giocata: ");
@@ -48,10 +40,6 @@ public class GiocatoreHelperUtente implements GiocatoreHelper {
 	@Override
 	public int GetPunteggio(Carta c, Carta c1) {
 		// TODO Auto-generated method stub
-		if (c==null)
-			throw new NullPointerException("Chiamata a giocatoreHelperUtente.GetPunteggio con c==NULL");
-		if (c1==null)
-			throw new NullPointerException("Chiamata a giocatoreHelperUtente.GetPunteggio con c1==NULL");
 		return c.GetPunteggio()+c1.GetPunteggio();
 	}
 

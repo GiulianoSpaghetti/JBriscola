@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 public class JBriscolaOpzioni {
 
 	String nomeUtente, nomeCpu, mazzo, nomeFont;
-	int secondi, locale, fontsize, fontstyle;;
+	int secondi, fontsize, fontstyle;;
 	boolean punti, ordina, avvisa, cartaAlta, upgrades;
 	int rgbTesto, rgbSfondo;
 	String IFTTTKey;
@@ -23,13 +23,6 @@ public class JBriscolaOpzioni {
 		dimensioni=p;
 	}
 	
-	public int getLocale() {
-		return locale;
-	}
-	
-	public void setLocale(int loc) {
-		locale=loc;
-	}
 	public String getIFTTTKey() {
 		return IFTTTKey;
 	}

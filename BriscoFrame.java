@@ -51,14 +51,14 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -3149121715539056995L;
-	private String version="0.4.1", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String version="0.4.2", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
 	private Carta c, c1;
 	private GiocatoreHelperCpu motoreCpu=null;
 	private JMenuBar menu;
-	private JMenu fileMenu, infoMenu, colorMenu, languageMenu;
+	private JMenu fileMenu, infoMenu, colorMenu;
 	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font, en, es, it, fr;
 	private boolean primaUtente;
 	private JBriscolaOpzioni dataOpzioni;
@@ -93,13 +93,12 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setColoreTesto(Color.BLACK);
 			f=new Font("Serif", Font.PLAIN, 20); 
 	     	dataOpzioni.setFont(f);
-			dataOpzioni.setLocale(4);
 			dataOpzioni.setDimensioni(new Point(550,520));
 			dataOpzioni.setIFTTTKey("");
 			salvaStato(gson.toJson(dataOpzioni));
 		}
 		bundle=Bundle;
-		bundle=ResourceBundle.getBundle("JBriscolaMessages", LoadLocale(dataOpzioni.locale));
+		bundle=ResourceBundle.getBundle("JBriscolaMessages", Locale.getDefault());
 		if (dataOpzioni.cartaAlta) {
 			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null, bundle);
 			primaUtente=cartaAlta.giocaPrimaUtente();
@@ -282,47 +281,9 @@ public class BriscoFrame extends JFrame {
 			    } 
 		});
 		colorMenu.add(coloreSfondo);
-		en=new JMenuItem(bundle.getString("en"));
-		en.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				SetLocale(1);
-			}});
-		es=new JMenuItem(bundle.getString("es"));
-		es.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				SetLocale(2);
-			}});
-		fr=new JMenuItem(bundle.getString("fr"));
-		fr.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				SetLocale(3);
-			}});
-		it=new JMenuItem(bundle.getString("it"));
-		it.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				SetLocale(4);
-			}});
-		languageMenu=new JMenu(bundle.getString("Translations"));
-		languageMenu.add(en);
-		languageMenu.add(es);
-		languageMenu.add(fr);
-		languageMenu.add(it);
 		menu.add(fileMenu);
 		menu.add(colorMenu);
 		menu.add(GetMenuMazzi());
-		menu.add(languageMenu);
 		menu.add(infoMenu);
 		setJMenuBar(menu);
 		setSize(dataOpzioni.dimensioni.x, dataOpzioni.dimensioni.y);
@@ -706,27 +667,5 @@ public class BriscoFrame extends JFrame {
 					e.printStackTrace();
 				}
 		   }
-	}
-	
-	private void SetLocale(int quale) {
-		dataOpzioni.locale=quale;
-		try {
-			salvaStato(gson.toJson(dataOpzioni));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JOptionPane.showMessageDialog(this, bundle.getString("restartMessage"), bundle.getString("Attention"), JOptionPane.OK_OPTION);		System.exit(0);
-	}
-	
-	private Locale LoadLocale(int quale) {
-		switch (quale) {
-			case 1: return Locale.ENGLISH; 
-			case 2: return new Locale("es", "ES"); 
-			case 3: return Locale.FRENCH;
-			default:
-				return Locale.ITALIAN;
-		}
-	}
-	
+	}	
 }

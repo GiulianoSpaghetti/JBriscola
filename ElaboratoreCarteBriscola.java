@@ -30,7 +30,7 @@ public class ElaboratoreCarteBriscola implements ElaboratoreCarte {
 		while(doppione.get(carta) && carta!=fine)
 			carta=(carta+1)%numeroCarte;
 		if (doppione.get(carta))
-			throw new IndexOutOfBoundsException("Chiamato elaboratoreCarteBriscola::getCarta quando non ci sono più carte da elaborare");
+			throw new IndexOutOfBoundsException("Chiamato elaboratoreCarteBriscola::getCarta quando non ci sono piÃ¹ carte da elaborare");
 		else {
 			if (inizio) {
 				valore=carta%10;

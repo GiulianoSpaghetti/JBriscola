@@ -70,8 +70,6 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 	public int Gioca(Vector<Carta> mano, int iCarta) {
 		// TODO Auto-generated method stub
 		int i;
-		if (mano.size()==0)
-			throw new IndexOutOfBoundsException("Chiamata a giocatoreHelperCpu::Gioca con mano.size()==0");
 		for (i=mano.size()-1; i>-1 && (mano.get(i).GetPunteggio()>5 || briscola.StessoSeme(mano.get(i))); i--);
 		if (i<0 || i>mano.size())
 			i=0;
@@ -82,10 +80,6 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 	@Override
 	public int Gioca(Vector<Carta> mano, Carta c, int i) {
 		// TODO Auto-generated method stub
-		if (mano.size()==0)
-			throw new IndexOutOfBoundsException("Chiamata a GiocatoreHelperCpu::gioca(mano, c, i) con mano.size==0");
-		if (c==null)
-			throw new NullPointerException("Chiamata a GiocatoreHelperCpu::gioca(mano, c, i) con c==NULL");
 		i=rand.nextInt();
 		if (!briscola.StessoSeme(c)) {
 			if ((i=GetSoprataglio(mano, c, true))<mano.size())
@@ -108,10 +102,6 @@ public class GiocatoreHelperCpu implements GiocatoreHelper {
 	@Override
 	public int GetPunteggio(Carta c, Carta c1) {
 		// TODO Auto-generated method stub
-		if (c==null)
-			throw new NullPointerException("Chiamata a giocatoreHelperUtente::getPunteggio con c==NULL");
-		if (c1==null)
-			throw new NullPointerException("Chiamata a giocatoreHelperUtente::getPunteggio con c1==NULL");
 		return c.GetPunteggio()+c1.GetPunteggio();
 	}
 
