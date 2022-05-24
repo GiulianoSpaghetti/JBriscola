@@ -38,7 +38,7 @@ public class JBriscolaAbout extends JDialog {
 		c.anchor = GridBagConstraints.CENTER;
 		p.add(new JLabel("<html><font style=\"bold\" size=\"25\">JBriscola "+versione+"</font></html>"), c);
 		c.gridy=1;
-		p.add(new JLabel("\u00A9"+" 2020 Giulio Sorrentino <gsorre84@gmail.com>"), c);
+		p.add(new JLabel("\u00A9"+" 2022 Giulio Sorrentino <gsorre84@gmail.com>"), c);
 		c.gridy=2;
 		p.add(new JLabel(bundle.getString("TrumpEmulator")), c);
 		c.gridy=3;
