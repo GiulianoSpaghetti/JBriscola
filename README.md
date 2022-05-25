@@ -100,3 +100,7 @@ E' una cosa che mi è parsa sfiziosa da implementare.
 # Upgrade dalla versione precedente
 La versione 0.2 salva la dimensione di JBriscoFrame calcolata nelle opzioni, per cui se si apre il gioco avendo la versione del file delle opzioni del 0.1, il frame non comparirà, avendo dimensione nulla.
 E' necessario cancellare il file delle opzioni della 0.1 prima di avviare la 0.2.
+
+# Sviluppi futuri
+Oltre a risolvere i bug grafici in ambiente windows, è opportuno effettuare la derivazione delle classi helper per sfruttare i socket al fine di ottenere un multiplayer alla tetrinet.
+Se volete farlo, siete liberi di poterlo sviluppare e di mandarmi i sorgenti come pull request, sarà mia premura mettervi tra gli sviluppatori del programma.
