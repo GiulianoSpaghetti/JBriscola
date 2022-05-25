@@ -1,6 +1,5 @@
 package org.numerone.altervista.jbriscola;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class BriscoPanel extends JPanel {

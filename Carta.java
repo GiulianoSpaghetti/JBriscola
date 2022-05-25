@@ -52,8 +52,15 @@ public class Carta {
 	public static Carta GetCarta(int quale) { 
 		return carte.get(quale);
 	}
+	private static void setPath() {
+		if (System.getProperty("os.name").contains("Windows"))
+			path="C:"+File.separator+"Program Files"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
+		else
+			path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
+
+	}
 	public static void CaricaImmagini(String mazzo, ResourceBundle b) throws FileNotFoundException {
-		path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
+		setPath();
 		nomeMazzo=mazzo;
 		String pathCompleta=path+mazzo+File.separator;
 		String s;
@@ -79,9 +86,8 @@ public class Carta {
 	}
 	
 	public static void CaricaImmagini(String mazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
-		path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
-		nomeMazzo=mazzo;
 		int i;
+		setPath();
 		for (i=0; i<carte.size(); i++) {
 			try {
 				carte.get(i).SetImmagine(class1.getClassLoader().getResource("Napoletano/"+i+".png"));

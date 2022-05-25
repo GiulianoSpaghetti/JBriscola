@@ -50,7 +50,7 @@ public class BriscoFrame extends JFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3149121715539056995L;
+	private static final long serialVersionUID = -4318617480129417581L;
 	private String version="0.4.2", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
@@ -59,7 +59,7 @@ public class BriscoFrame extends JFrame {
 	private GiocatoreHelperCpu motoreCpu=null;
 	private JMenuBar menu;
 	private JMenu fileMenu, infoMenu, colorMenu;
-	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font, en, es, it, fr;
+	private JMenuItem esci, nuovaPartita, opzioni, about, aggiornamenti, coloreSfondo, coloreTesto, font;
 	private boolean primaUtente;
 	private JBriscolaOpzioni dataOpzioni;
 	private static Gson gson = new Gson();
