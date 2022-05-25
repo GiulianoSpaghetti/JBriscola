@@ -7,8 +7,6 @@ https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/
 
 http://www.java2s.com/Code/Jar/j/Downloadjfontchooser105jar.htm
 
-Per i mazzi, quelli di wxBriscola vanno benissimo.
-
 Ha due possibilità di inserimento degli input nella fase di gioco:
 
 - Da tastiera tramite i tasti 1,2 e 3 anche dal tastierino numerico
