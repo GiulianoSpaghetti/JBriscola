@@ -19,11 +19,13 @@ public class JBriscoMain {
 	/**
 	 * @param args
 	 */
-	public static ResourceBundle bundle;
+	protected static ResourceBundle bundle;
+	protected static String versione;
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		      public void run() {
 		    	Locale l;
+		    	versione="0.4.3";
 		    	if (args.length>0)
 		    		l=new Locale(args[0]);
 		    	else

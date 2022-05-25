@@ -51,7 +51,7 @@ public class BriscoFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -4318617480129417581L;
-	private String version="0.4.2", Autore="Giulio Sorrentino <gsorre84@gmail.com>";
+	private String Autore="Giulio Sorrentino <gsorre84@gmail.com>";
 	private BriscoPanel p;
 	private Giocatore utente, cpu, primo, secondo, temp;
 	private Mazzo mazzo;
@@ -250,7 +250,7 @@ public class BriscoFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				OnAbout();
 			}});
-		aggiornamenti=new JMenuItem(JBriscoMain.bundle.getString("CheckUpdates"));
+	/*	aggiornamenti=new JMenuItem(JBriscoMain.bundle.getString("CheckUpdates"));
 		aggiornamenti.addActionListener(new ActionListener() {
 
 			@Override
@@ -258,9 +258,9 @@ public class BriscoFrame extends JFrame {
 				// TODO Auto-generated method stub
 				OnAggiornamenti(true);
 				
-			}});
+			}});*/
 		infoMenu.add(about);
-		infoMenu.add(aggiornamenti);
+//		infoMenu.add(aggiornamenti);
 		colorMenu=new JMenu(JBriscoMain.bundle.getString("Colors"));
 		coloreTesto=new JMenuItem(JBriscoMain.bundle.getString("TextColor"));
 		coloreTesto.addActionListener(new ActionListener() {
@@ -286,8 +286,8 @@ public class BriscoFrame extends JFrame {
 		setSize(dataOpzioni.dimensioni.x, dataOpzioni.dimensioni.y);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		if (dataOpzioni.upgrades)
-			OnAggiornamenti(false);
+//		if (dataOpzioni.upgrades)
+//			OnAggiornamenti(false);
 		Thread thread=new Thread( new Runnable() { 
 			@Override
 			public void run() {
@@ -386,7 +386,7 @@ public class BriscoFrame extends JFrame {
 
 	}
 	
-	private void OnAggiornamenti(boolean avvisa) {
+/*	private void OnAggiornamenti(boolean avvisa) {
 		try {
 			HttpsURLConnection connection;
 			URL url=new URL("https://raw.githubusercontent.com/numerunix/JBriscola/master/version.info");
@@ -416,7 +416,7 @@ public class BriscoFrame extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	}
+	}*/
 	
 	private void OnTimer() {
 		int scarto;
@@ -613,7 +613,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnAbout() {
-		JBriscolaAbout b=new JBriscolaAbout(this, version);
+		JBriscolaAbout b=new JBriscolaAbout(this);
 		b.dispose();
 	}
 	
