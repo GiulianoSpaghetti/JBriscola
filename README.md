@@ -26,6 +26,11 @@ Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manu
 Il jar è stato compilato con la java machine 17, per cui è necessaria la jre 17 o superiore per poter aprire il programma.
 Stando alle mie ricerche, oracle ha dismesso la jre pubblicando solo il JDK, che sarebbe il tool di sviluppo, scaricabile all'indirizzo https://www.oracle.com/java/technologies/downloads/#jdk18-windows
 
+# Mazzi di carte
+Come mazzi di carte +è possibile usare quelli di wxbriscola, ad ogni modo li ho uppati sia in formato windows che in formato linux per semplificare il download.
+Ricordatevi che la jbriscola funziona benino solo sotto linux, perché sotto windows ha diversi bug grafici.
+Se volete risolverli e darmi il vostro codice sorgente sotto forma di pull request su questa piattaforma, sarò ben felice di mettervi tra gli sviluppatori del progetto.
+
 # Set di mazzi arbitrario
 Sono necessari 4 semi, ognuno di 10 carte.
 - Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 9 è 10 di bastoni, in sequenza)
