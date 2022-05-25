@@ -31,13 +31,11 @@ public class OpzioniFrame extends JDialog {
 	private JCheckBox punti, ordina, avvisa, cartaAlta, upgrades;
 	private JButton Ok, Cancel;
 	JBriscolaOpzioni opzioni;
-	ResourceBundle Bundle;
 	
-	public OpzioniFrame(JFrame parent, JBriscolaOpzioni o, ResourceBundle b) {
-		super(parent, b.getString("Options"), Dialog.ModalityType.DOCUMENT_MODAL);
+	public OpzioniFrame(JFrame parent, JBriscolaOpzioni o) {
+		super(parent, JBriscoMain.bundle.getString("Options"), Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		opzioni=o;
-		Bundle=b;
 		JPanel p=new JPanel();
 		p.setLayout(new GridBagLayout());
 		c=new GridBagConstraints();
@@ -45,7 +43,7 @@ public class OpzioniFrame extends JDialog {
 		c.gridy = 0;
 		c.insets = new Insets(5, 0, 0, 10);
 		c.anchor = GridBagConstraints.LINE_END;
-		p.add(new JLabel(Bundle.getString("userName")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("userName")), c);
 		c.gridx=1;
 		nomeUtente=new JTextField(20);
 		nomeUtente.addActionListener(new ActionListener() {
@@ -60,7 +58,7 @@ public class OpzioniFrame extends JDialog {
 		p.add(nomeUtente, c);
 		c.gridy=1;
 		c.gridx=0;
-		p.add(new JLabel(Bundle.getString("cpuName")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("cpuName")), c);
 		nomeCpu=new JTextField(20);
 		nomeCpu.setText(opzioni.nomeCpu);
 		c.gridx=1;
@@ -75,7 +73,7 @@ public class OpzioniFrame extends JDialog {
 		p.add(nomeCpu, c);
 		c.gridy=2;
 		c.gridx=0;
-		p.add(new JLabel(Bundle.getString("seconds")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("seconds")), c);
 		c.gridx=1;
 		secondi=new JTextField(20);
 		secondi.setText(""+opzioni.secondi);
@@ -90,36 +88,36 @@ public class OpzioniFrame extends JDialog {
 		p.add(secondi, c);
 		c.gridy=3;
 		c.gridx=0;
-		p.add(new JLabel(Bundle.getString("iftttKey")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("iftttKey")), c);
 		c.gridx=1;
 		IFTTTKey=new JTextField(20);
 		IFTTTKey.setText(opzioni.IFTTTKey);
 		p.add(IFTTTKey, c);
-		punti=new JCheckBox(Bundle.getString("trumpCardSeed"));
+		punti=new JCheckBox(JBriscoMain.bundle.getString("trumpCardSeed"));
 		punti.setSelected(opzioni.punti);
 		c.gridy=4;
 		c.gridx=0;
 		c.gridwidth=2;
 		c.fill=GridBagConstraints.HORIZONTAL;
 		p.add(punti, c);
-		ordina=new JCheckBox(Bundle.getString("orderCards"));
+		ordina=new JCheckBox(JBriscoMain.bundle.getString("orderCards"));
 		ordina.setSelected(opzioni.ordina);
 		c.gridy=5;
 		p.add(ordina, c);
-		avvisa=new JCheckBox(Bundle.getString("deckAlert"));
+		avvisa=new JCheckBox(JBriscoMain.bundle.getString("deckAlert"));
 		avvisa.setSelected(opzioni.avvisa);
 		c.gridy=6;
 		p.add(avvisa, c);
-		cartaAlta=new JCheckBox(Bundle.getString("makeMostValuableCardGame"));
+		cartaAlta=new JCheckBox(JBriscoMain.bundle.getString("makeMostValuableCardGame"));
 		cartaAlta.setSelected(opzioni.cartaAlta);
 		c.gridy=7;
 		p.add(cartaAlta, c);
-		upgrades=new JCheckBox(Bundle.getString("checkNewVersions"));
+		upgrades=new JCheckBox(JBriscoMain.bundle.getString("checkNewVersions"));
 		upgrades.setSelected(opzioni.upgrades);
 		c.gridy=8;
 		c.gridx=0;
 		p.add(upgrades, c);
-		Ok=new JButton(Bundle.getString("Ok"));
+		Ok=new JButton(JBriscoMain.bundle.getString("Ok"));
 		Ok.addActionListener(new ActionListener() {
 
 			@Override
@@ -131,7 +129,7 @@ public class OpzioniFrame extends JDialog {
 		c.gridy=9;
 		c.gridwidth=1;
 		p.add(Ok, c);
-		Cancel=new JButton(Bundle.getString("Cancel"));
+		Cancel=new JButton(JBriscoMain.bundle.getString("Cancel"));
 		c.gridx=1;
 		Cancel.addActionListener(new ActionListener() {
 
@@ -164,7 +162,7 @@ public class OpzioniFrame extends JDialog {
 			opzioni.secondi=Integer.parseInt(secondi.getText());
 			setVisible(false);
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("integerError"), Bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, JBriscoMain.bundle.getString("integerError"), JBriscoMain.bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

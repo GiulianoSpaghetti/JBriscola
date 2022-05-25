@@ -19,10 +19,16 @@ public class JBriscoMain {
 	/**
 	 * @param args
 	 */
+	public static ResourceBundle bundle;
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		      public void run() {
-		  		ResourceBundle bundle = ResourceBundle.getBundle("JBriscolaMessages", Locale.getDefault());
+		    	Locale l;
+		    	if (args.length>0)
+		    		l=new Locale(args[0]);
+		    	else
+		    		l=new Locale("it");
+		  		bundle = ResourceBundle.getBundle("JBriscolaMessages", l);
 		  		try {
 					BriscoFrame f=new BriscoFrame(bundle);
 				} catch (IOException e) {

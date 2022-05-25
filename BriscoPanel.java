@@ -29,12 +29,12 @@ public class BriscoPanel extends JPanel {
 	private ElaboratoreCarteBriscola helper;
 	private int spaziatura, spaziaturay;
 	ResourceBundle Bundle;
-	public BriscoPanel(Giocatore u, Giocatore c, Mazzo m, ElaboratoreCarteBriscola b, boolean primaUtente, Font font, ResourceBundle bundle) throws FileNotFoundException, IOException {
+	public BriscoPanel(Giocatore u, Giocatore c, Mazzo m, ElaboratoreCarteBriscola b, boolean primaUtente, Font font) throws FileNotFoundException, IOException {
 		if (System.getProperty("os.name").contains("Windows"))
 			spaziaturay=60;
 		else
 			spaziaturay=100;
-		Bundle=bundle;
+		Bundle=JBriscoMain.bundle;
 		Utente=u;
 		Computer=c;
 		f=font;

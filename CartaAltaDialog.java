@@ -36,19 +36,18 @@ public class CartaAltaDialog extends JDialog {
 	private JPanel p, p1;
 	private ResourceBundle bundle;
 	
-	public CartaAltaDialog(JFrame Parent, String nomeMazzo, Font f, ResourceBundle b) {
-		super(Parent, b.getString("mostValuableCardGame"), Dialog.ModalityType.DOCUMENT_MODAL);
+	public CartaAltaDialog(JFrame Parent, String nomeMazzo, Font f) {
+		super(Parent, JBriscoMain.bundle.getString("mostValuableCardGame"), Dialog.ModalityType.DOCUMENT_MODAL);
 		int i;
-		bundle=b;
 		el=new ElaboratoreCarteBriscola(true);
 		try {
 			if (nomeMazzo=="Napoletano")
-				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle, BriscoFrame.class);
+				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, BriscoFrame.class);
 			else
-				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo, bundle);
+				Carta.Inizializza(40, new CartaHelperBriscola(el), nomeMazzo);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), b.getString("Error"), JOptionPane.OK_OPTION);
+			JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), JBriscoMain.bundle.getString("Error"), JOptionPane.OK_OPTION);
 			System.exit(0);
 		}
 		mazzo=new Mazzo(el);

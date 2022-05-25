@@ -64,7 +64,6 @@ public class BriscoFrame extends JFrame {
 	private JBriscolaOpzioni dataOpzioni;
 	private static Gson gson = new Gson();
 	private static String path="JBriscola"+File.separator+"jbriscola.json";
-	private ResourceBundle bundle;  
 	ElaboratoreCarteBriscola e;
 	CartaHelperBriscola br;
 	Timer t;
@@ -97,10 +96,8 @@ public class BriscoFrame extends JFrame {
 			dataOpzioni.setIFTTTKey("");
 			salvaStato(gson.toJson(dataOpzioni));
 		}
-		bundle=Bundle;
-		bundle=ResourceBundle.getBundle("JBriscolaMessages", Locale.getDefault());
 		if (dataOpzioni.cartaAlta) {
-			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null, bundle);
+			CartaAltaDialog cartaAlta=new CartaAltaDialog(this, dataOpzioni.getMazzo(), null);
 			primaUtente=cartaAlta.giocaPrimaUtente();
 			cartaAlta.dispose();
 		} else
@@ -109,11 +106,11 @@ public class BriscoFrame extends JFrame {
 		e=new ElaboratoreCarteBriscola(dataOpzioni.punti);
 		br=new CartaHelperBriscola(e);
 		if (dataOpzioni.getMazzo().equals("Napoletano")) {
-			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle, BriscoFrame.class);
+			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), BriscoFrame.class);
 			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 			motoreCpu.CaricaImmagine(BriscoFrame.class);
 		} else {
-			Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
+			Carta.Inizializza(40, br, dataOpzioni.getMazzo());
 			motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 			motoreCpu.CaricaImmagine();
 		}
@@ -130,7 +127,7 @@ public class BriscoFrame extends JFrame {
 		
 		
 		f=dataOpzioni.getFont();
-		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, f, bundle);
+		p=new BriscoPanel(utente, cpu, mazzo, e, primaUtente, f);
 		p.setForeground(dataOpzioni.getColoreTesto());
 		p.setBackground(dataOpzioni.getColoreSfondo());
 		getContentPane().add(p);
@@ -204,8 +201,8 @@ public class BriscoFrame extends JFrame {
 			}
 		});
 		menu=new JMenuBar();
-		fileMenu=new JMenu(bundle.getString("File"));
-		nuovaPartita=new JMenuItem(bundle.getString("NewGame"));
+		fileMenu=new JMenu(JBriscoMain.bundle.getString("File"));
+		nuovaPartita=new JMenuItem(JBriscoMain.bundle.getString("NewGame"));
 		nuovaPartita.addActionListener(new ActionListener() {
 
 			@Override
@@ -219,7 +216,7 @@ public class BriscoFrame extends JFrame {
 				}
 			}});
 		fileMenu.add(nuovaPartita);
-		font=new JMenuItem(bundle.getString("Font"));
+		font=new JMenuItem(JBriscoMain.bundle.getString("Font"));
 		font.addActionListener(new ActionListener() {
 
 			@Override
@@ -228,7 +225,7 @@ public class BriscoFrame extends JFrame {
 				OnSelezionaFont();
 			}});
 		fileMenu.add(font);
-		opzioni=new JMenuItem(bundle.getString("Options"));
+		opzioni=new JMenuItem(JBriscoMain.bundle.getString("Options"));
 		opzioni.addActionListener(new ActionListener() {
 
 			@Override
@@ -237,7 +234,7 @@ public class BriscoFrame extends JFrame {
 				OnOpzioni();
 			}});
 		fileMenu.add(opzioni);
-		esci=new JMenuItem(bundle.getString("Exit"));
+		esci=new JMenuItem(JBriscoMain.bundle.getString("Exit"));
 		esci.addActionListener(new ActionListener() {
 
 			@Override
@@ -245,15 +242,15 @@ public class BriscoFrame extends JFrame {
 				dispatchEvent(new WindowEvent(BriscoFrame.this, WindowEvent.WINDOW_CLOSING));
 			}});
 		fileMenu.add(esci);
-		infoMenu=new JMenu(bundle.getString("?"));
-		about=new JMenuItem(bundle.getString("About"));
+		infoMenu=new JMenu(JBriscoMain.bundle.getString("?"));
+		about=new JMenuItem(JBriscoMain.bundle.getString("About"));
 		about.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				OnAbout();
 			}});
-		aggiornamenti=new JMenuItem(bundle.getString("CheckUpdates"));
+		aggiornamenti=new JMenuItem(JBriscoMain.bundle.getString("CheckUpdates"));
 		aggiornamenti.addActionListener(new ActionListener() {
 
 			@Override
@@ -264,8 +261,8 @@ public class BriscoFrame extends JFrame {
 			}});
 		infoMenu.add(about);
 		infoMenu.add(aggiornamenti);
-		colorMenu=new JMenu(bundle.getString("Colors"));
-		coloreTesto=new JMenuItem(bundle.getString("TextColor"));
+		colorMenu=new JMenu(JBriscoMain.bundle.getString("Colors"));
+		coloreTesto=new JMenuItem(JBriscoMain.bundle.getString("TextColor"));
 		coloreTesto.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) 
 			    { 
@@ -273,7 +270,7 @@ public class BriscoFrame extends JFrame {
 			    } 
 		});
 		colorMenu.add(coloreTesto);
-		coloreSfondo=new JMenuItem(bundle.getString("BackgroundColor"));
+		coloreSfondo=new JMenuItem(JBriscoMain.bundle.getString("BackgroundColor"));
 		coloreSfondo.addActionListener(new ActionListener() {
 			  public void actionPerformed(ActionEvent e) 
 			    { 
@@ -304,7 +301,7 @@ public class BriscoFrame extends JFrame {
 	
 	private void OnNuovaPartita(boolean avvisa, boolean inizializza) throws FileNotFoundException, IOException {
 		int punteggioUtente, punteggioCpu, i;
-		if (avvisa && JOptionPane.showConfirmDialog(null, bundle.getString("newGameMessage"), bundle.getString("confirmDialog"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) {
+		if (avvisa && JOptionPane.showConfirmDialog(null, JBriscoMain.bundle.getString("newGameMessage"), JBriscoMain.bundle.getString("confirmDialog"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION) {
 			;	
 		} else {
 			if (inizializza) {
@@ -319,11 +316,11 @@ public class BriscoFrame extends JFrame {
 			mazzo=new Mazzo(e);
 			br=new CartaHelperBriscola(e);
 			if (dataOpzioni.getMazzo().equals("Napoletano")) {
-				Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle, BriscoFrame.class);
+				Carta.Inizializza(40, br, dataOpzioni.getMazzo(), BriscoFrame.class);
 				motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 				motoreCpu.CaricaImmagine(BriscoFrame.class);
 			} else {
-				Carta.Inizializza(40, br, dataOpzioni.getMazzo(), bundle);
+				Carta.Inizializza(40, br, dataOpzioni.getMazzo());
 				motoreCpu=new GiocatoreHelperCpu(e.GetCartaBriscola());
 				motoreCpu.CaricaImmagine();
 			}
@@ -381,9 +378,9 @@ public class BriscoFrame extends JFrame {
 				stream.write( postData );
 				connection.disconnect();
 				if (connection.getResponseCode()!=200)
-					JOptionPane.showMessageDialog(this, bundle.getString("ifttError"), bundle.getString("Error"), JOptionPane.OK_OPTION );
+					JOptionPane.showMessageDialog(this, JBriscoMain.bundle.getString("ifttError"), JBriscoMain.bundle.getString("Error"), JOptionPane.OK_OPTION );
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), bundle.getString("Error"), JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), JBriscoMain.bundle.getString("Error"), JOptionPane.OK_OPTION);
 			}
 		}
 
@@ -401,20 +398,20 @@ public class BriscoFrame extends JFrame {
 			float attuale=Float.parseFloat(version);
 			float nuova=Float.parseFloat(input);
 			if (attuale<nuova) {
-				if (JOptionPane.showConfirmDialog(this, String.format(bundle.getString("newVersionMessage"), version, input), bundle.getString("newVersionTitle"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(this, String.format(JBriscoMain.bundle.getString("newVersionMessage"), version, input), JBriscoMain.bundle.getString("newVersionTitle"), JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
 					if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 					    Desktop.getDesktop().browse(new URI("https://github.com/numerunix/JBriscola/releases"));
 					}
 				}
 			} else {
 				if (avvisa)
-					JOptionPane.showMessageDialog(this, bundle.getString("latestVersionMessage"), bundle.getString("latestVersionTitle"), JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(this, JBriscoMain.bundle.getString("latestVersionMessage"), JBriscoMain.bundle.getString("latestVersionTitle"), JOptionPane.OK_OPTION);
 			}
 			br.close();
 			if (connection.getResponseCode()!=200)
-				JOptionPane.showMessageDialog(this, bundle.getString("httpError"), bundle.getString("Error"), JOptionPane.OK_OPTION );
+				JOptionPane.showMessageDialog(this, JBriscoMain.bundle.getString("httpError"), JBriscoMain.bundle.getString("Error"), JOptionPane.OK_OPTION );
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), bundle.getString("Error"), JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(), JBriscoMain.bundle.getString("Error"), JOptionPane.OK_OPTION);
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -434,22 +431,22 @@ public class BriscoFrame extends JFrame {
 			scarto=utente.GetPunteggio()-cpu.GetPunteggio();
 			String s;
 			if (scarto==0)
-				s=bundle.getString("draw");
+				s=JBriscoMain.bundle.getString("draw");
 			else {
 				if (scarto>0)
-					s=bundle.getString("wonMessage");
+					s=JBriscoMain.bundle.getString("wonMessage");
 				else
-					s=bundle.getString("looseMessage");
+					s=JBriscoMain.bundle.getString("looseMessage");
 				scarto=Math.abs(scarto);
-				s=s+scarto + bundle.getString("points");
+				s=s+scarto + JBriscoMain.bundle.getString("points");
 				Thread t=new Thread( new Runnable() {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						IFTTTConnect("JBriscola.end", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, utente.GetPunteggioStr()+bundle.getString("at")+cpu.GetPunteggioStr());
+						IFTTTConnect("JBriscola.end", dataOpzioni.IFTTTKey, dataOpzioni.nomeUtente, dataOpzioni.nomeCpu, utente.GetPunteggioStr()+JBriscoMain.bundle.getString("at")+cpu.GetPunteggioStr());
 					}});
 				t.start();				
-				if (JOptionPane.showConfirmDialog(this, s+bundle.getString("doYouWishToContinue"), bundle.getString("GameOver"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION)
+				if (JOptionPane.showConfirmDialog(this, s+JBriscoMain.bundle.getString("doYouWishToContinue"), JBriscoMain.bundle.getString("GameOver"), JOptionPane.OK_CANCEL_OPTION)==JOptionPane.CANCEL_OPTION)
 					System.exit(0);
 				else
 					try {
@@ -495,7 +492,7 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnOpzioni() {
-		OpzioniFrame f=new OpzioniFrame(this, dataOpzioni, bundle);
+		OpzioniFrame f=new OpzioniFrame(this, dataOpzioni);
 		f.setVisible(true);
 		dataOpzioni=f.getOpzioni();
 		utente.setNome(dataOpzioni.nomeUtente);
@@ -540,11 +537,11 @@ public class BriscoFrame extends JFrame {
 	}
 
 	private JMenu GetMenuMazzi() throws FileNotFoundException {
-		JMenu m=new JMenu(bundle.getString("Decks"));
+		JMenu m=new JMenu(JBriscoMain.bundle.getString("Decks"));
 		JMenuItem i=null;
 		File f=new File(Carta.GetPathMazzi());
 		if (!f.exists())
-			throw new FileNotFoundException(bundle.getString("Path")+ Carta.GetPathMazzi()+bundle.getString("doesntExists"));
+			throw new FileNotFoundException(JBriscoMain.bundle.getString("Path")+ Carta.GetPathMazzi()+JBriscoMain.bundle.getString("doesntExists"));
 		File[] dirs=f.listFiles();
 		i=new JMenuItem("Napoletano");
 		i.addActionListener(new ActionListener() {
@@ -554,7 +551,7 @@ public class BriscoFrame extends JFrame {
 				// TODO Auto-generated method stub
 				String mazzo=Carta.GetNomeMazzo();
 				try {
-					Carta.CaricaImmagini("Napoletano", bundle, BriscoFrame.class);
+					Carta.CaricaImmagini("Napoletano", BriscoFrame.class);
 					motoreCpu.CaricaImmagine(BriscoFrame.class);
 					p.CaricaImmagine(BriscoFrame.class);			
 					repaint();
@@ -564,15 +561,15 @@ public class BriscoFrame extends JFrame {
 					salvaStato(gson.toJson(dataOpzioni));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+JBriscoMain.bundle.getString("reloadPreviousDeck"), JBriscoMain.bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 					try {
-						Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
+						Carta.CaricaImmagini(mazzo, BriscoFrame.class);
 						motoreCpu.CaricaImmagine(BriscoFrame.class);
 						p.CaricaImmagine();
 						repaint();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(BriscoFrame.this, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(BriscoFrame.this, JBriscoMain.bundle.getString("unableToReloadError"), JBriscoMain.bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}});
@@ -586,7 +583,7 @@ public class BriscoFrame extends JFrame {
 						// TODO Auto-generated method stub
 						String mazzo=Carta.GetNomeMazzo();
 						try {
-							Carta.CaricaImmagini(file.getName(), bundle);
+							Carta.CaricaImmagini(file.getName());
 							motoreCpu.CaricaImmagine();
 							p.CaricaImmagine();
 							repaint();
@@ -596,15 +593,15 @@ public class BriscoFrame extends JFrame {
 							salvaStato(gson.toJson(dataOpzioni));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+bundle.getString("reloadPreviousDeck"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(BriscoFrame.this, e.getMessage()+JBriscoMain.bundle.getString("reloadPreviousDeck"), JBriscoMain.bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							try {
-								Carta.CaricaImmagini(mazzo, bundle, BriscoFrame.class);
+								Carta.CaricaImmagini(mazzo, BriscoFrame.class);
 								motoreCpu.CaricaImmagine(BriscoFrame.class);
 								p.CaricaImmagine();
 								repaint();
 							} catch (IOException e1) {
 								// TODO Auto-generated catch block
-								JOptionPane.showMessageDialog(BriscoFrame.this, bundle.getString("unableToReloadError"), bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(BriscoFrame.this, JBriscoMain.bundle.getString("unableToReloadError"), JBriscoMain.bundle.getString("Error"), JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}});
@@ -616,13 +613,13 @@ public class BriscoFrame extends JFrame {
 	}
 	
 	private void OnAbout() {
-		JBriscolaAbout b=new JBriscolaAbout(this, version, bundle);
+		JBriscolaAbout b=new JBriscolaAbout(this, version);
 		b.dispose();
 	}
 	
 	private void OnColoreSfondo() {
 		Color sfondo=dataOpzioni.getColoreSfondo();
-        sfondo=JColorChooser.showDialog(this, bundle.getString("selectColor"), sfondo); 
+        sfondo=JColorChooser.showDialog(this, JBriscoMain.bundle.getString("selectColor"), sfondo); 
         if (sfondo == null)
         	return;
         setBackground(sfondo);
@@ -639,7 +636,7 @@ public class BriscoFrame extends JFrame {
 	
 	private void OnColoreTesto() {
 		Color testo=dataOpzioni.getColoreTesto();
-        testo=JColorChooser.showDialog(this, bundle.getString("selectColor"), testo); 
+        testo=JColorChooser.showDialog(this, JBriscoMain.bundle.getString("selectColor"), testo); 
         if (testo==null)
         	return;
        p.setForeground(testo);

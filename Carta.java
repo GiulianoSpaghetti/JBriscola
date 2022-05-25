@@ -25,24 +25,24 @@ public class Carta {
 		img=null;
 	}
 	
-	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b) throws FileNotFoundException {
+	public static void Inizializza(int n, CartaHelper h, String nomeMazzo) throws FileNotFoundException {
 		carte=new Vector<Carta>();
 		helper=h;
 		int i;
 		for (i=0; i<n; i++) {
 			carte.add(new Carta(i));
 		}
-		CaricaImmagini(nomeMazzo, b);
+		CaricaImmagini(nomeMazzo);
 	}
 	
-	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
+	public static void Inizializza(int n, CartaHelper h, String nomeMazzo, Class<BriscoFrame> class1) throws FileNotFoundException {
 		carte=new Vector<Carta>();
 		helper=h;
 		int i;
 		for (i=0; i<n; i++) {
 			carte.add(new Carta(i));
 		}
-		CaricaImmagini(nomeMazzo, b, class1);
+		CaricaImmagini(nomeMazzo, class1);
 	}
 	
 	public static void dealloca() {
@@ -59,7 +59,7 @@ public class Carta {
 			path=File.separator+"usr"+File.separator+"share"+File.separator+"wxBriscola"+File.separator+"Mazzi"+File.separator;
 
 	}
-	public static void CaricaImmagini(String mazzo, ResourceBundle b) throws FileNotFoundException {
+	public static void CaricaImmagini(String mazzo) throws FileNotFoundException {
 		setPath();
 		nomeMazzo=mazzo;
 		String pathCompleta=path+mazzo+File.separator;
@@ -70,7 +70,7 @@ public class Carta {
 			s=pathCompleta+i+".png";
 			f=new File(s);
 			if (!f.exists()) {
-				throw new FileNotFoundException(b.getString("theFile") + s + b.getString("doesntExists"));
+				throw new FileNotFoundException(JBriscoMain.bundle.getString("theFile") + s + JBriscoMain.bundle.getString("doesntExists"));
 			}
 			try {
 				carte.get(i).SetImmagine(s);
@@ -85,7 +85,7 @@ public class Carta {
 		}
 	}
 	
-	public static void CaricaImmagini(String mazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
+	public static void CaricaImmagini(String mazzo, Class<BriscoFrame> class1) throws FileNotFoundException {
 		setPath();
 		int i;
 		nomeMazzo="Napoletano";

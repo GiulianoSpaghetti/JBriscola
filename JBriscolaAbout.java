@@ -27,8 +27,8 @@ public class JBriscolaAbout extends JDialog {
 	 */
 	private static final long serialVersionUID = -1268026765962412628L;
 	private JLabel sito;
-	public JBriscolaAbout(JFrame parent, String versione, ResourceBundle bundle) {
-		super(parent, bundle.getString("Informations"), Dialog.ModalityType.DOCUMENT_MODAL);
+	public JBriscolaAbout(JFrame parent, String versione) {
+		super(parent, JBriscoMain.bundle.getString("Informations"), Dialog.ModalityType.DOCUMENT_MODAL);
 		JPanel p=new JPanel();
 		p.setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
@@ -40,7 +40,7 @@ public class JBriscolaAbout extends JDialog {
 		c.gridy=1;
 		p.add(new JLabel("\u00A9"+" 2022 Giulio Sorrentino <gsorre84@gmail.com>"), c);
 		c.gridy=2;
-		p.add(new JLabel(bundle.getString("TrumpEmulator")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("TrumpEmulator")), c);
 		c.gridy=3;
 		sito=new JLabel("<html><font style=\"color: blue\">https://github.com/numerunix/wxbriscola/</font></html>");
 		sito.addMouseListener(new MouseListener() {
@@ -86,17 +86,17 @@ public class JBriscolaAbout extends JDialog {
 			}});
 		p.add(sito, c);
 		c.gridy=4;
-		p.add(new JLabel(bundle.getString("license")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("license")), c);
 		c.gridy=5;
-		p.add(new JLabel(bundle.getString("modianoAlert")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("modianoAlert")), c);
 		c.gridy=6;
-		p.add(new JLabel(bundle.getString("nintendoAlert")), c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("nintendoAlert")), c);
 		c.gridy=7;
-		p.add(new JLabel(bundle.getString("translationAlert")),c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("translationAlert")),c);
 		c.gridy=8;
-		p.add(new JLabel(bundle.getString("translationAlert1")),c);
+		p.add(new JLabel(JBriscoMain.bundle.getString("translationAlert1")),c);
 		c.gridy=9;
-		JButton ok=new JButton(bundle.getString("Ok"));
+		JButton ok=new JButton(JBriscoMain.bundle.getString("Ok"));
 		ok.addActionListener(new ActionListener() {
 
 			@Override
