@@ -22,6 +22,12 @@ E' possibile giocare con un set di mazzi arbitrario. La cartella dei mazzi deve 
 
 Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manualmente la nuova voce al menù, non come in wxBriscola.
 
+# Installazione su Windows
+Il jar è stato compilato con la java machine 17, per cui è necessaria la jre 17 o superiore per poter aprire il programma.
+Stando alle mie ricerche, oracle ha dismesso la jre pubblicando solo il JDK, che sarebbe il tool di sviluppo, scaricabile all'indirizzo https://www.oracle.com/java/technologies/downloads/#jdk18-windows
+
+Una volta installato, il programma dovrebbe partire, ma attualmente è possibile giocare solo col mazzo italiano. Attendete ulteriori sviluppi che saranno disponibili a breve.
+
 # Set di mazzi arbitrario
 Sono necessari 4 semi, ognuno di 10 carte.
 - Bastoni è rappresentato con le immagini jpeg coi numeri da 0 a 9 (0 è 1 di bastoni, 9 è 10 di bastoni, in sequenza)
