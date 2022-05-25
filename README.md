@@ -100,7 +100,3 @@ E' una cosa che mi è parsa sfiziosa da implementare.
 # Upgrade dalla versione precedente
 La versione 0.2 salva la dimensione di JBriscoFrame calcolata nelle opzioni, per cui se si apre il gioco avendo la versione del file delle opzioni del 0.1, il frame non comparirà, avendo dimensione nulla.
 E' necessario cancellare il file delle opzioni della 0.1 prima di avviare la 0.2.
-
-# Incompatibilità con windows
-Per via di questioni non ideologiche, ho deciso di liberarmi di windows, per cui non garantisco la compatibilità di jrbsicola dalla 0.3 con windows.
-Su debian, invece, è sufficiente prendere i packages delle carte da wxbriscola ed installarli, sono compatibili.
