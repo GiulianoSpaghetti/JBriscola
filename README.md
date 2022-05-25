@@ -27,7 +27,7 @@ Il jar è stato compilato con la java machine 17, per cui è necessaria la jre 1
 Stando alle mie ricerche, oracle ha dismesso la jre pubblicando solo il JDK, che sarebbe il tool di sviluppo, scaricabile all'indirizzo https://www.oracle.com/java/technologies/downloads/#jdk18-windows
 
 # Mazzi di carte
-Come mazzi di carte +è possibile usare quelli di wxbriscola, ad ogni modo li ho uppati sia in formato windows che in formato linux per semplificare il download.
+Come mazzi di carte è possibile usare quelli di wxbriscola, ad ogni modo li ho uppati sia in formato windows che in formato linux per semplificare il download.
 Ricordatevi che la jbriscola funziona benino solo sotto linux, perché sotto windows ha diversi bug grafici.
 Se volete risolverli e darmi il vostro codice sorgente sotto forma di pull request su questa piattaforma, sarò ben felice di mettervi tra gli sviluppatori del progetto.
 
