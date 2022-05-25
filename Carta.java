@@ -88,6 +88,7 @@ public class Carta {
 	public static void CaricaImmagini(String mazzo, ResourceBundle b, Class<BriscoFrame> class1) throws FileNotFoundException {
 		setPath();
 		int i;
+		nomeMazzo="Napoletano";
 		for (i=0; i<carte.size(); i++) {
 			try {
 				carte.get(i).SetImmagine(class1.getClassLoader().getResource("Napoletano/"+i+".png"));
