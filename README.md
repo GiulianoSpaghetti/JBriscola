@@ -21,8 +21,8 @@ E' possibile giocare con un set di mazzi arbitrario. La cartella dei mazzi deve 
 Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manualmente la nuova voce al menù, non come in wxBriscola.
 
 # Installazione su Windows
-Il jar è stato compilato con la java machine 17, per cui è necessaria la jre 17 o superiore per poter aprire il programma.
-Stando alle mie ricerche, oracle ha dismesso la jre pubblicando solo il JDK, che sarebbe il tool di sviluppo, scaricabile all'indirizzo https://www.oracle.com/java/technologies/downloads/#jdk18-windows
+Il jar è stato compilato con la openjdk 17, per cui è necessaria la jre 17 o superiore per poter aprire il programma.
+Stando alle mie ricerche, oracle ha dismesso la jre pubblicando solo il JDK, che sarebbe il tool di sviluppo, che però su windows soffre di diverse lacune, è meglio usare la OpenJDK 18, scaricabile all'indirizzo https://jdk.java.net/18/ .
 
 # Mazzi di carte
 Come mazzi di carte è possibile usare quelli di wxbriscola, ad ogni modo li ho uppati sia in formato windows che in formato linux per semplificare il download.
