@@ -107,6 +107,5 @@ Se volete farlo, siete liberi di poterlo sviluppare e di mandarmi i sorgenti com
 Se, invece, volete produrre traduzioni di qualsiasi genere, siete comunque liberi di mandarmele, sempre facendo la pull request, in questo modo verrete inseriti tra i traduttori del programma
 
 # Donazioni
-[![paypal](https://www.paypalobjects.com/it_IT/IT/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=H4ZHTFRCETWXG)
 
-oppure puoi fare una donazione tramite carta hype.
+http://numerone.altervista.org/donazioni.php
