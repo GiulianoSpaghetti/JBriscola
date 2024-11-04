@@ -1,6 +1,9 @@
 # JBriscola
 JBriscola: porting in java di wxBriscola. Simulatore del gioco della briscola a due giocatori senza multiplayer.
 
+## ATTENZIONE
+Java puoi essere usato per polarizzare il sistema operativo e/o l'hardware.
+
 Per la compilazione ha bisogno delle librerie gson e jfontchooser.
 
 https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.2/
