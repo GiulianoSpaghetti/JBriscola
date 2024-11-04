@@ -25,7 +25,7 @@ E' presente  un giochino iniziale che consente di stabilire chi gioca per primo:
 
 E' possibile giocare con un set di mazzi arbitrario. La cartella dei mazzi deve essere nella directory di lavoro.
 
-Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manualmente la nuova voce al menù, non come in wxBriscola.
+Attualmente l'estensione delle traduzioni non è possibile senza aggiungere manualmente la nuova voce al menù, come in wxBriscola.
 
 # Installazione su Windows
 Il jar è stato compilato con la openjdk 17, per cui è necessaria la jre 17 o superiore per poter aprire il programma.
